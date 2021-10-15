@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "variables.css";
+
+
+.text-pink{
+    color: var(--pink) !important;
+}
+.bg-teal{
+    background-color: var(--teal);
+}
+.bg-yellow{
+    background-color: var(--yellow);
+}
+.bg-pink{
+    background-color: var(--pink);
+}
+.text-teal{
+    color: var(--teal);
+}
+.text-pink{
+    color: var(--pink);
+}
+.pt-6 {
+    padding-top: 6.5rem !important;
+}
+
+.hover\:text-pink-600:hover{
+    color: var(--pink) !important;
+}
+.hover\:bg-pink:hover{
+    background-color: var(--pink) !important;
+}
+.hover\:border-pink-600:hover{
+    border: 1px solid var(--pink) !important;
+}
+.border-yellow-300{
+    border: 1px solid var(--yellow) !important;
+}
+
+.search-list div input{
+    outline: none;
+    border: 1px solid var(--yellow) !important;
+}
+.search-list div input:focus{
+    border: 2px solid var(--yellow) !important;
+}
+
+
+.card-post{
+    padding: 1rem;
+}
+.card-post .title{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.card-post .body{
+    width: 100%;
+}

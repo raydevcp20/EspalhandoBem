@@ -1,0 +1,24 @@
+@import "../../variables.css";
+
+
+.box-user-detail{
+    position: relative;
+    background-color: var(--white);
+    padding: 2rem;
+    height: 300px;
+}
+.box-user-detail .box-header{
+    position: absolute;
+    background-color: var(--teal);
+    color: var(--white);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 2rem;
+
+}
+.box-user-detail .box-body{
+    position: absolute;
+    background-color: var(--yellow);
+    color: var(--black);
+    margin-top: 2rem;
+}
