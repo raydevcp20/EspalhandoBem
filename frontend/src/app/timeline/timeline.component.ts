@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-timeline',
@@ -11,7 +12,7 @@ export class TimelineComponent implements OnInit {
   showList:Boolean = false;
   createNewPost:Boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -21,4 +22,7 @@ export class TimelineComponent implements OnInit {
     console.log()
   }
 
+  navigateTo(url:String){
+    this.router.navigate([url]);
+  }
 }

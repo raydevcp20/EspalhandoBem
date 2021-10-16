@@ -1,2 +1,32 @@
+@import '../../variables.css';
+@import '../../styles.css';
 
+.modal-header{
+    background-color: var(--yellow);
+    color: var(--pink);
+    display: flex;
+    justify-content: end;
+    font-size: 1.3rem;
+    padding: .5rem 1rem;
+    margin-bottom: -2px;
+}
 
+.modal-body{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    background-color: var(--white);
+    border: 2px solid var(--yellow);
+    box-sizing: border-box;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--yellow);
+    color: var(--pink);
+    margin-top: -7px;
+    padding: .5rem 1rem;
+}

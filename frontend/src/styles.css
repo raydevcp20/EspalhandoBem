@@ -31,14 +31,30 @@
 .hover\:text-pink-600:hover{
     color: var(--pink) !important;
 }
+.hover\:text-pink-darker:hover{
+    color: var(--pink-darker) !important;
+}
+.hover\:text-teal:hover{
+    color: var(--teal) !important;
+}
+
 .hover\:bg-pink:hover{
     background-color: var(--pink) !important;
 }
 .hover\:border-pink-600:hover{
     border: 1px solid var(--pink) !important;
 }
+.hover\:border-teal:hover{
+    color: var(--teal) !important;
+}
 .border-yellow-300{
     border: 1px solid var(--yellow) !important;
+}
+.border-teal{
+    border: 1px solid var(--teal);
+}
+.border-3{
+    border-width: 3px !important;
 }
 
 .search-list div input{
@@ -59,4 +75,50 @@
 }
 .card-post .body{
     width: 100%;
+}
+
+.form-group{
+    color: var(--teal);
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 15px;
+}
+.form-group input{
+    width: 100%;
+    border-radius: 5px;
+    padding: .2rem .5rem;
+    border: 1px solid var(--teal);
+    margin-top: 10px;
+    color: var(--black);
+}
+
+.form-group input:focus{
+    border: 2px solid var(--teal);
+    outline: none;
+}
+
+.form-group textarea{
+    width: 100%;
+    border-radius: 5px;
+    padding: .5rem .8rem ;
+    border: 1px solid var(--teal);
+    min-height: 100px;
+    color: var(--black);
+}
+.form-group textarea:focus{
+    border: 2px solid var(--teal);
+    outline: none;
+}
+
+.btn-label{
+    font-size: 1rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: var(--pink);
+    font-weight: 700;
+}
+.btn-label:hover{
+    color: var(--pink-darker);
+
 }
