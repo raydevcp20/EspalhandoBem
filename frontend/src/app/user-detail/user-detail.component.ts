@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
-
+  favorite:Boolean = false;
+  
   constructor() { }
 
   ngOnInit(): void {

@@ -3,10 +3,62 @@
 <main class="grid grid-cols-6 gap-3">
     <div class="box-user-detail col-start-2 col-span-4">
         <div class="box-header text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur nemo quas, nostrum fugiat ipsam cumque qui adipisci illo dolor molestias, dicta dolores placeat sint repudiandae ad assumenda dolorum, fuga aliquam!
+            <div>
+                <h1 class="text-3xl text-pink font-bold">Instituição X</h1>
+                <i class="text-3xl text-yellow far fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="!favorite"></i>
+                <i class="text-3xl text-yellow fas fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="favorite"></i>
+            </div>
+            <h3 class="text-xl">Abrigo para idosos</h3>
         </div>
         <div class="box-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi fugit itaque vel aut sint explicabo iusto, adipisci quis rerum, facere cupiditate error sunt fuga culpa ab eligendi quasi. Libero, ut.
+            <h3>Descrição</h3>
+            <p class="font-semibold">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur consectetur maiores, vero porro consequatur, soluta officia illum quidem tenetur eos eius laborum necessitatibus dolor qui perspiciatis expedita labore itaque ipsam!
+            </p>
+
+            <h3>Endereço e dados</h3>
+            <p class="font-semibold">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae nam ab atque, velit aut quis omnis ipsum eaque. Ex vel non aut at. Nostrum officiis quod enim impedit eum doloribus.
+            </p>
+
+            <div class="lookbook-grid">
+                <figure class="model">
+                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                    <!-- <figcaption class="model--caption">
+                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
+                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
+                    </figcaption> -->
+                </figure>
+                <figure class="model">
+                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                    <!-- <figcaption class="model--caption">
+                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
+                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
+                    </figcaption> -->
+                </figure>
+                <figure class="model">
+                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                    <!-- <figcaption class="model--caption">
+                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
+                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
+                    </figcaption> -->
+                </figure>
+                <figure class="model">
+                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                    <!-- <figcaption class="model--caption">
+                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
+                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
+                    </figcaption> -->
+                </figure>
+                <figure class="model">
+                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                    <!-- <figcaption class="model--caption">
+                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
+                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
+                    </figcaption> -->
+                </figure>
+                
+            </div>
         </div>
     </div>
 </main>

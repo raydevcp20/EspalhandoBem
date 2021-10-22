@@ -2,23 +2,80 @@
 
 
 .box-user-detail{
-    position: relative;
+    margin-top: 7rem;
     background-color: var(--white);
-    padding: 2rem;
-    height: 300px;
+    padding: 1rem;
+    min-height: 300px;
 }
 .box-user-detail .box-header{
-    position: absolute;
     background-color: var(--teal);
     color: var(--white);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-    padding: 2rem;
+    padding: .8rem;
+    margin-top: -70px;
+}
+.box-user-detail .box-header div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
 }
 .box-user-detail .box-body{
-    position: absolute;
     background-color: var(--yellow);
     color: var(--black);
-    margin-top: 2rem;
+    margin-top: 1rem;
+    padding: 1.5rem;
+
+}
+.box-user-detail .box-body h3:first-child{
+    margin-top: 0;
+}
+.box-user-detail .box-body h3{
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+img {
+    min-width: 10em;
+    max-width: 100%;
+    display: block;
+    background: var(--white);
+}
+.model {
+    margin: 0;
+    position: relative;
+}
+
+@media( min-width: 45em ) {
+    .lookbook-grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .model {
+      flex: 47.5%;
+      margin: .5%;
+    }
+}
+@media( min-width: 65em ) {
+    .model {
+        flex: 24.25% 0;
+        margin: .25%;
+    }
+    @supports( display: grid ) {
+        .lookbook-grid {
+            display: grid;
+            grid-gap: .5em;
+            grid-template-columns: repeat( 4, minmax( 200px, 1fr ) );
+        }
+        .model {
+            margin: 0;
+        }
+        .model:nth-of-type(4n-1) {
+            grid-row-end: span 2;
+            grid-column-end: span 2;
+        }
+    }
 }
