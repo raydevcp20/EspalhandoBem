@@ -5,6 +5,9 @@
 @import "tailwindcss/utilities";
 @import "variables.css";
 
+main{
+    background-color: var(--grey);
+}
 
 .text-pink{
     color: var(--pink) !important;
@@ -47,6 +50,9 @@
 .hover\:border-pink-600:hover{
     border: 1px solid var(--pink) !important;
 }
+.focus\:border-teal-darker{
+    border: 1px solid var(--teal-darker) !important;
+}
 .hover\:border-teal:hover{
     color: var(--teal) !important;
 }
@@ -69,6 +75,12 @@
 }
 
 
+.ui-list li{
+    text-decoration: underline;
+    color: var(--teal-darker);
+    cursor: pointer;
+    word-break: break-all;
+}
 .card-post{
     padding: 1rem;
 }
@@ -79,7 +91,10 @@
 .card-post .body{
     width: 100%;
 }
-
+small.msg{
+    font-size: .8rem;
+    color: var(--pink-darker);
+}
 .form-group{
     color: var(--teal);
     width: 100%;

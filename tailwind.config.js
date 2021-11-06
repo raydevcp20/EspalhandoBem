@@ -2,11 +2,13 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
-    fontFamily: {
-      display: ['Poppins', 'system-ui', 'sans-serif'],
-      body: ['Poppins', 'system-ui', 'sans-serif'],
+    screens:{
+      sm: '425px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px'
     },
+    extend: {}
   },
   variants: {
     extend: {},
