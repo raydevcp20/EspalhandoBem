@@ -1,0 +1,128 @@
+@import "../../variables.css";
+
+
+.box-user-detail{
+    background-color: #fff;
+    margin-top: 3em;
+    padding: 1em 1.5em 3em;
+    box-shadow: 0 6px 10px #0003;
+    margin-bottom: 3rem;
+}
+.box-user-detail .box-header{
+    background-color: var(--teal);
+    color: var(--white);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: .8rem;
+    margin-top: -45px;
+}
+.box-user-detail .box-header div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.box-user-detail .box-body{
+    background-color: var(--yellow);
+    color: var(--black);
+    margin-top: 1rem;
+    padding: 1.5rem;
+
+}
+.box-user-detail .box-body .info-group{
+   margin-bottom: 1rem;
+}
+.box-user-detail .box-body .info-group:last-child{
+    margin-bottom: 0;
+}
+.box-user-detail .box-body .info-group h3{
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--pink);
+}
+.box-user-detail .box-body .info-group p{
+    font-size: 1rem;
+    color: var(--pink-darker);
+    word-break: break-all;
+}
+.box-user-detail .box-body h3:first-child{
+    margin-top: 0;
+}
+.box-user-detail .box-body h3{
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+img {
+    min-width: 10em;
+    max-width: 100%;
+    display: block;
+    background: var(--white);
+}
+.model {
+    margin: 0;
+    position: relative;
+}
+
+@media( min-width: 45em ) {
+    .lookbook-grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .model {
+      flex: 47.5%;
+      margin: .5%;
+    }
+}
+@media( min-width: 65em ) {
+    .model {
+        flex: 24.25% 0;
+        margin: .25%;
+    }
+    @supports( display: grid ) {
+        .lookbook-grid {
+            display: grid;
+            grid-gap: .5em;
+            grid-template-columns: repeat( 4, minmax( 200px, 1fr ) );
+        }
+        .model {
+            margin: 0;
+        }
+        .model:nth-of-type(4n-1) {
+            grid-row-end: span 2;
+            grid-column-end: span 2;
+        }
+    }
+}
+.div-chips label ul{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.div-chips label ul li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--pink);
+    color: var(--white);
+    padding: 5px 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+.div-chips label ul li span{
+    font-size: 16px;
+}
+.div-chips label ul li i{
+    color: var(--white);
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 18px;
+    transition: 0.2s;
+}
+.div-chips label ul li i:hover{
+    color: var(--pink-darker);
+}

@@ -25,4 +25,8 @@ export class TimelineComponent implements OnInit {
   navigateTo(url:String){
     this.router.navigate([url]);
   }
+
+  onNewPost():void{
+    
+  }
 }
