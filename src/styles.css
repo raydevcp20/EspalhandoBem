@@ -53,8 +53,11 @@ main{
 .focus\:border-teal-darker{
     border: 1px solid var(--teal-darker) !important;
 }
-.hover\:border-teal:hover{
+.hover\:text-teal:hover{
     color: var(--teal) !important;
+}
+.hover\:text-pink:hover{
+    color: var(--pink) !important;
 }
 .border-yellow-300{
     border: 1px solid var(--yellow) !important;
