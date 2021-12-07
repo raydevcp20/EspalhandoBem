@@ -10,10 +10,30 @@
 			<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
 		</div>
 		<span>or use your email for registration</span>
-		<input type="text" name="name" [(ngModel)]="newUser.name" required placeholder="Name">
-		<input type="email" name="email" [(ngModel)]="newUser.email" required placeholder="Email">
-		<input type="password" name="password" [(ngModel)]="newUser.password" required placeholder="Password">
-		<button type="submit">SignUp</button>
+		<p>Você é uma pessoa física ou jurídica?</p>
+		<input type="radio" id="cpf" name="cpf" value="CPF">
+		<label for="cpf">CPF</label><br>
+		<input type="radio" id="cnpj" name="cnpj" value="CNPJ">
+		<label for="cpf">CNPJ</label>
+		<input type="text" name="name" placeholder="Nome">
+		<input type="email" name="email" placeholder="Email">
+		<input type="number" name="cpf" placeholder="CPF">
+		<input type="tel" name="telefone" placeholder="Telefone">
+		<input type="text" name="endereco" placeholder="Endereço">
+		<input type="number" name="cep" placeholder="CEP">
+		<input type="text" name="cidade" placeholder="Cidade">
+		<input type="text" name="estado" placeholder="Estado">
+		<label for="categoria">Selecione uma categoria</label>
+		<select name="categoria" id="categoria">
+			<option value="A">A</option>
+			<option value="B">B</option>
+			<option value="C">C</option>
+			<option value="D">D</option>
+		</select>
+		<input type="password" name="senha" placeholder="Senha">
+		<input type="password" name="senha" placeholder="Repita a senha">
+		<button>Cadastrar</button>
+		<button>SignUp</button>
 	</form>
 	</div>
 	<div class="form-container sign-in-container">
