@@ -1,3 +1,5 @@
+
+
 <nav class="bg-teal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -25,9 +27,9 @@
               </div>
               <div [ngClass]="{ 'hidden' : !showMenu}" class=" origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a href="/myprofile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-  
-                <a href="/login" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-2" id="user-menu-item-1">Sign out</a>
+                <!-- <a routerlink="/myprofile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a> -->
+                <a routerLink="/myprofile" routerLinkActive="text-pink" class="block px-4 py-2 text-sm text-gray-700">Meu perfil</a>
+                <a routerlink="/login" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-2" id="user-menu-item-1">Sign out</a>
               </div>
             </div>
           </div>
@@ -66,9 +68,9 @@
           </div>
         </div>
         <div class="mt-3 px-2 space-y-1 font-semibold">
-          <a href="/myprofile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+          <a routerlink="/myprofile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
   
-          <a href="/login" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-2" id="user-menu-item-1">Sign out</a>
+          <a routerlink="/login" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-2" id="user-menu-item-1">Sign out</a>
         </div>
       </div>
     </div>

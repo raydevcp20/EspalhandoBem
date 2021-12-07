@@ -1,28 +1,31 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
-var bodyParser = require('body-parser');
+const authRoutes = require('./routes/auth');
+const postsRoutes = require('./routes/posts');
+
+// parse application/json
+app.use(express.json());
+app.use(bodyParser.json());
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
-app.use(bodyParser.json());
+//get permisions and disable CORS
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, X-Custom-Header, Authorization');
 
-//import DAO's
-const userDAO = require('./DAO/user-DAO');
-const user = new userDAO();
-
-
-app.post('/createUser', (req, res)=>{
-    console.log(req.body);
-
-    user.createUser(req.body).then( (result)=>{
-        console.log(result);
-    }).catch( (err)=>{
-        console.log(err);
-    });
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+    next();
 });
 
+app.use('/auth', authRoutes);
+app.use('/auth', postsRoutes);
 
 
 app.listen(3000, () =>{
