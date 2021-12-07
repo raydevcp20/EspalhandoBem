@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthGuard } from '../services/auth-guard.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -11,10 +12,14 @@ export class MyProfileComponent implements OnInit {
   editingData:boolean = false;
   arrayLinks: any = [];
   profile:any = [];
+  userLogged:any = {};
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit(): void {
+    this.userLogged = localStorage.getItem("user");
+    console.log(this.userLogged)
   }
 
   addNewLink():void{
