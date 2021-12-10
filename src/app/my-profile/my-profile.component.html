@@ -1,124 +1,120 @@
 
 
-<main class="grid md:grid-cols-6 gap-3 sm:grid-cols-4">
-    <h1 class="md:col-start-2 col-span-4 text-3xl text-teal font-bold text-center mt-10 mb-0 sm:col-start-1">Meu Perfil</h1>
-    <div class="box-user-detail md:col-start-2 col-span-4 sm:col-start-1">
-        <div class="box-header text-lg">
-            <div>
-                <h1 class="text-1xl text-white font-bold">Dados Cadastrados</h1>
+<main  class="h-screen">
+    <div class="grid md:grid-cols-6 gap-3 sm:grid-cols-4">
+        <h1 class="md:col-start-2 col-span-4 text-3xl text-teal font-bold text-center mt-10 mb-0 sm:col-start-1">Meu Perfil</h1>
+        <div class="box-user-detail md:col-start-2 col-span-4 sm:col-start-1">
+            <div class="box-header text-lg">
+                <div>
+                    <h1 class="text-1xl text-white font-bold">Dados Cadastrados</h1>
+                </div>
             </div>
-        </div>
-        <form (ngSubmit)="editProfile()" #form="ngForm">
-            <div class="box-body grid grid-cols-2">
-                <div class="md:col-span-1 sm:col-span-2 p-1">
-                    <div class="info-group">
-                        <h3>Nome</h3>
-                        <p class="font-semibold">
-                            Instituição X
-                        </p>
-                    </div>
-                    <div class="info-group form-group">
-                        <h3>Email</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            instituicao-x@gmail.com
-                        </p>
-                        <input [(ngModel)]="profile.email" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                    <div class="info-group form-group">
-                        <h3>Telefone</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            (81) 91234-5678
-                        </p>
-                        <input [(ngModel)]="profile.telefone" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                    <div class="info-group form-group">
-                        <h3>Categoria</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            Abrigo para idosos
-                        </p>
-                        <input [(ngModel)]="profile.category" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                </div>
-                
-                <div class="mt-0 md:col-span-1 sm:col-span-2 sm:mt-4 p-1">
-                    <div class="info-group form-group mt-0 sm:mt-4">
-                        <h3>Endereço</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            Av: Dr. Júnior Dias, 129
-                        </p>
-                        <input [(ngModel)]="profile.street" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                    <div class="info-group form-group">
-                        <h3>Cidade</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            São José Vila Nova
-                        </p>
-                        <input [(ngModel)]="profile.city" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                    <div class="info-group form-group">
-                        <h3>Estado</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            Pernambuco
-                        </p>
-                        <input [(ngModel)]="profile.state" *ngIf="editingData" type="url" placeholder=""
-                            size="30"/>
-                    </div>
-                </div>
-
-                <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4 ">
-                    <div class="info-group form-group">
-                        <h3>Descrição</h3>
-                        <p *ngIf="!editingData" class="font-semibold">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, sint odio nostrum quae reprehenderit autem aspernatur. Non iure omnis enim quisquam deleniti maiores cum officia eos nostrum, repudiandae dolor unde.
-                        </p>
-                        <textarea *ngIf="editingData" [(ngModel)]="profile.description"></textarea>
-                    </div>
-                </div>
-                
-                <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4">
-                    <div class="info-group">
-                        <h3>Galeria de fotos</h3>
-                        <small class="msg">Adicione até 10 links</small>
-                        <ul class="ui-list">
-                            <li>https://sitemaneiro.com.br </li>
-                            <li>https://sitemaneiro.com.br/wafsegsrgrhthymguyh,iiiiiiiirmmmmmmm </li>
-                            <li>https://sitemaneiro.com.br/aeg\gswegrgehtrhrtthtr </li>
-                        </ul>
-                        <div class="form-group">
-                            <input [(ngModel)]="newLink" *ngIf="addLink" type="url" placeholder="https://example.com"
-                            size="30"/>
+            <form (ngSubmit)="editProfile()" #form="ngForm">
+                <div class="box-body grid grid-cols-2 h-full">
+                    <div class="md:col-span-1 sm:col-span-2 p-1">
+                        <div class="info-group">
+                            <h3>Nome</h3>
+                            <p class="font-semibold">
+                                {{userLogged.name}}
+                            </p>
                         </div>
-                        
+                        <div class="info-group form-group">
+                            <h3>Email</h3>
+                            <p *ngIf="!editingData" class="font-semibold">
+                                {{userLogged.email}}
+                            </p>
+                            <input [(ngModel)]="userLogged.email" *ngIf="editingData" type="email" name="email" placeholder="{{userLogged.email}}"
+                                size="30"/>
+                        </div>
+                        <div class="info-group form-group">
+                            <h3>Telefone</h3>
+                            <p *ngIf="!editingData" class="font-semibold">
+                                {{userLogged.telephone}}
+                            </p>
+                            <input [(ngModel)]="userLogged.telephone" *ngIf="editingData" name="telephone" type="tel" placeholder="{{userLogged.telephone}}"
+                                size="30"/>
+                        </div>
                     </div>
-                    <div class="info-group text-right">
-                        <button *ngIf="!addLink" (click)="addLink = !addLink" class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink" type="button">
-                            Adicionar
-                        </button>
-                        <button *ngIf="addLink" (click)="addNewLink()" class="transition duration-300 ease-in-out py-1 px-3 bg-green-600 text-white rounded font-semibold hover:bg-green-700" type="button">
-                            Salvar
-                        </button>
+                    
+                    <div class="mt-0 md:col-span-1 sm:col-span-2 sm:mt-4 p-1" *ngIf="userLogged.type_NID == 'cnpj'">
+                        <div class="info-group form-group mt-0 sm:mt-4">
+                            <h3>Endereço</h3>
+                            <p *ngIf="!editingData" class="font-semibold">
+                                {{userLogged.street}}
+                            </p>
+                            <input [(ngModel)]="userLogged.street" *ngIf="editingData" name="street" type="text" placeholder="{{userLogged.street}}"
+                                size="30"/>
+                        </div>
+                        <div class="info-group form-group">
+                            <h3>Cidade</h3>
+                            <p *ngIf="!editingData" class="font-semibold">
+                                {{userLogged.city}}
+                            </p>
+                            <input [(ngModel)]="userLogged.city" *ngIf="editingData" name="city" type="text" placeholder="{{userLogged.city}}"
+                                size="30"/>
+                        </div>
+                        <div class="info-group form-group">
+                            <h3>Estado</h3>
+                            <p *ngIf="!editingData" class="font-semibold">
+                                {{userLogged.state}}
+                            </p>
+                            <input [(ngModel)]="userLogged.state" *ngIf="editingData" name="state" type="text" placeholder="{{userLogged.state}}"
+                                size="30"/>
+                        </div>
+                    </div>
+    
+                    <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4 ">
+                        <div class="info-group form-group">
+                            <h3>Descrição</h3>
+                            <p *ngIf="!editingData && !userLogged.description" class="font-semibold">
+                                Opa! seu perfil está sem descrição. Adicione pela primeira vez uma descrição clicando em editar informações.
+                            </p>
+                            <p *ngIf="!editingData && userLogged.description" class="font-semibold">
+                                {{userLogged.description}}
+                            </p>
+                            <textarea *ngIf="editingData" [(ngModel)]="userLogged.description" name="description">{{userLogged.description}}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4" *ngIf="userLogged.type_NID == 'cnpj'">
+                        <div class="info-group">
+                            <h3>Galeria de fotos</h3>
+                            <small class="msg">Adicione até 10 links</small>
+                            <ul class="ui-list">
+                                <li *ngIf="!pictures.length">Adicione fotos da sua instituição</li>
+                                <li *ngFor="let picture of pictures">{{picture.link}}</li>
+                            </ul>
+                            <div class="form-group">
+                                <input [(ngModel)]="newLink.link" name="link" *ngIf="addLink" type="url" placeholder="https://example.com"
+                                size="30"/>
+                            </div>
+                            
+                        </div>
+                        <div class="info-group text-right">
+                            <button *ngIf="!addLink" (click)="addLink = !addLink" class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink" type="button">
+                                Adicionar
+                            </button>
+                            <button *ngIf="addLink" (click)="addNewLink()" class="transition duration-300 ease-in-out py-1 px-3 bg-green-600 text-white rounded font-semibold hover:bg-green-700" type="button">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+    
+                    <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4">
+                        <div class="info-group flex justify-between">
+                            <button *ngIf="editingData" (click)="editingData = !editingData" class="transition duration-300 py-1 px-3 bg-red-500 text-white rounded font-semibold hover:bg-red-600" type="button">
+                                Cancelar
+                            </button>
+                            <button *ngIf="!editingData" (click)="editingData = !editingData" class="transition duration-300 py-1 px-3 bg-teal text-white rounded font-semibold hover:bg-white hover:text-teal hover:border-teal" type="button">
+                                Editar informações
+                            </button>
+                            <button *ngIf="editingData" (click)="editProfile()" class="transition duration-300 py-1 px-3 bg-green-600 text-white rounded font-semibold hover:bg-green-700" type="button">
+                                Enviar alterações
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-span-2 mt-4 sm:col-span-2 sm:mt-4">
-                    <div class="info-group flex justify-between">
-                        <button *ngIf="editingData" (click)="editingData = !editingData" class="transition duration-300 py-1 px-3 bg-red-500 text-white rounded font-semibold hover:bg-red-600" type="button">
-                            Cancelar
-                        </button>
-                        <button *ngIf="!editingData" (click)="editingData = !editingData" class="transition duration-300 py-1 px-3 bg-teal text-white rounded font-semibold hover:bg-white hover:text-teal hover:border-teal" type="button">
-                            Editar informações
-                        </button>
-                        <button *ngIf="editingData" (click)="editData()" class="transition duration-300 py-1 px-3 bg-green-600 text-white rounded font-semibold hover:bg-green-700" type="button">
-                            Enviar alterações
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </main>

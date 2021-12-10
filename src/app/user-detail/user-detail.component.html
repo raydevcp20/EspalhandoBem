@@ -2,21 +2,28 @@
     <div class="box-user-detail col-start-2 col-span-4">
         <div class="box-header text-lg">
             <div>
-                <h1 class="text-3xl text-pink font-bold">Instituição X</h1>
-                <i class="text-3xl text-yellow far fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="!favorite"></i>
-                <i class="text-3xl text-yellow fas fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="favorite"></i>
+                <h1 class="text-3xl text-pink font-bold">{{userDetail.name}}</h1>
+                <!-- <i class="text-3xl text-yellow far fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="!favorite"></i>
+                <i class="text-3xl text-yellow fas fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="favorite"></i> -->
             </div>
-            <h3 class="text-xl">Abrigo para idosos</h3>
+            <h3 class="text-xl">{{userDetail.categoryName}}</h3>
         </div>
         <div class="box-body">
             <h3>Descrição</h3>
-            <p class="font-semibold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur consectetur maiores, vero porro consequatur, soluta officia illum quidem tenetur eos eius laborum necessitatibus dolor qui perspiciatis expedita labore itaque ipsam!
+            <p *ngIf="userDetail.description" class="font-semibold">
+                {{userDetail.description}}
+            </p>
+            <p *ngIf="!userDetail.description" class="font-semibold">
+                Ops, essa instituição ainda não possui descrição
             </p>
 
             <h3>Endereço e dados</h3>
-            <p class="font-semibold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae nam ab atque, velit aut quis omnis ipsum eaque. Ex vel non aut at. Nostrum officiis quod enim impedit eum doloribus.
+            <p>
+                <span  class="font-semibold text-pink">Rua:</span> {{userDetail.street}} <br/>
+                <span  class="font-semibold text-pink">Cidade:</span> {{userDetail.city}} <br/>
+                <span  class="font-semibold text-pink">Estado:</span> {{userDetail.state}} <br/>
+                <span  class="font-semibold text-pink">CEP:</span> {{userDetail.cep}} <br/>
+                <span  class="font-semibold text-pink">Telefone:</span> {{userDetail.telephone}} <br/>
             </p>
 
             <div class="lookbook-grid">

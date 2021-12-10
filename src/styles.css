@@ -65,6 +65,17 @@ main{
 .border-teal{
     border: 1px solid var(--teal);
 }
+.border-pink{
+    border: 1px solid var(--pink);
+}
+
+.border-error{
+    border: 2px solid #D02E3C !important;
+}
+.border-success{
+    border: 1px solid #5DD941 !important;
+}
+
 .border-3{
     border-width: 3px !important;
 }

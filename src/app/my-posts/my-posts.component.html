@@ -1,13 +1,9 @@
-<main class="h-fit">
-    <div class="grid grid-cols-6 gap-3">
-        <div class="pt-6 col-start-2 col-span-4">
-            <h1 *ngIf="userLogged.length > 0" class="uppercase font-black text-5xl">Bem vindo, <span class="text-pink-700">{{userLogged[0].name}}</span></h1>
-            <h1 *ngIf="!userLogged.length" class="uppercase font-black text-5xl">Bem vindo!!</h1>
+<main class="h-screen">
+    <div class="grid grid-cols-6 gap-3 ">
+        <div class="pt-6 col-start-2 col-span-4 text-center">
+            <h1 class="uppercase font-black text-5xl text-pink">Minhas postagens</h1>
         </div>
-        <div class="mt-8 col-start-2 col-span-4 flex justify-end" *ngIf="userLogged[0].type_NID == 'cnpj'">
-            <button class="transition duration-300 ease-in-out py-2 px-4 bg-pink text-white uppercase rounded font-semibold hover:bg-white hover:text-pink-600 hover:border-pink-600" (click)="createNewPost = !createNewPost" type="button">Nova postagem</button>
-        </div>
-        <div class="p-2 col-start-2 col-span-4 bg-teal rounded mb-8">
+        <div class="mt-8 p-2 col-start-2 col-span-4 bg-teal rounded mb-8">
             <div class="grid grid-cols-7 gap-2">
                 <div class="md:col-span-2 col-span-3 sm:col-span-7">
                     <div class="search-list">
@@ -46,21 +42,20 @@
                 </div>
 
                 <div class="flex items-center justify-end md:col-span-2 col-span-2 sm:col-span-7">
-                    <button (click)="ngOnInit()" class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink-600 hover:border-pink-600" type="button">
+                    <button class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink-600 hover:border-pink-600" type="button">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>
 
-                <div class="col-span-7" *ngFor="let post of posts">
-                    <div *ngIf="posts.length" class="card-post rounded bg-white">
+                <div class="col-span-7" *ngFor="let post of myPosts">
+                    <div *ngIf="myPosts.length" class="card-post rounded bg-white">
                         <div class="title flex items-center justify-between cursor-pointer">
-                            <span class="text-pink font-bold" (click)="navigateTo('/userdetail/'+post.id_user)">
+                            <span class="text-pink font-bold" (click)="navigateTo('/userdetail/{{post.id}}')">
                                 {{post.nameUser}}
                                 <span class="font-normal text-black"> - {{post.post_date | date:'longDate': 'UTC': 'pt-BR' }}</span>
                             </span>
-                            
-                            <i class="fas fa-bookmark text-pink text-2xl" *ngIf="post.favorite == 1" (click)="setFavorite(post)"></i>
-                            <i class="far fa-bookmark text-pink text-2xl" *ngIf="post.favorite == 0" (click)="setFavorite(post)"></i>
+
+                            <i class="fas fa-trash text-pink text-2xl" (click)="deletePost(post)"></i>
                         </div>
                         <div class="body">
                             <h2 class="font-bold text-2xl">{{post.title}}</h2>
@@ -69,46 +64,14 @@
                     </div>
                 </div>
 
-                <div class="col-span-7 rounded bg-white" *ngIf="!posts.length">
-                    <span class="font-bold text-2xl m-3 flex items-center justify-center">Nenhuma nova postagem</span>
+                <div class="col-span-7 rounded bg-white" *ngIf="!myPosts.length">
+                    <span class="font-bold text-2xl m-3 flex items-center justify-center">Nenhuma postagem</span>
                 </div>
             </div>
         </div>
     </div>
 </main>
 
-<!-- modal -->
-<div *ngIf="createNewPost" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity flex items-center justify-center z-10 inset-0" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    
-      <div class="inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-        <div class="modal-header">
-            <i class="fas fa-times cursor-pointer hover:text-pink-darker" (click)="createNewPost = !createNewPost"></i>
-        </div>
-         
-            <div class="modal-body">
-                <h2 class="text-pink font-bold text-2xl">Criar nova postagem</h2>
-                <div class="text-teal">
-                    <div class="form-group">
-                        <label class="text-base" for="">Título</label>
-                        <input type="text" [(ngModel)]="newPost.title" #ctrl="ngModel"/>
-                    </div>
-    
-                    <div class="form-group">
-                        <label class="text-base"  for="">Descrição</label>
-                        <textarea [(ngModel)]="newPost.description" #ctrl="ngModel"></textarea>
-                    </div>
-                </div>
-            </div>
-                
-            <div class="modal-footer sm:px-6 sm:flex">
-                <button type="button" class="btn-label" (click)="createNewPost = !createNewPost">
-                    Cancelar
-                </button>
-                <button class="transition duration-300 ease-in-out py-1 px-3 bg-teal text-white rounded font-semibold hover:bg-white hover:text-teal hover:border-teal" (click)="onNewPost()">
-                    Criar
-                </button>
-            </div>
-    </div>
-</div>
+
   
 

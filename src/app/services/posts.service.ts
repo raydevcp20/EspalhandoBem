@@ -35,9 +35,17 @@ export class PostsService {
     );
   }
 
-  filterByFavorites(){
+  getByUser(userID:any){
     return this.http
-      .get(`${this.url}/listFavorites`, { responseType: "json" })
+      .get(`${this.url}/listPostsByUser/${userID}`, { responseType: "json" })
+      .pipe(
+        
+      );
+  }
+
+  filterByFavorites(userID:number){
+    return this.http
+      .get(`${this.url}/listFavorites/${userID}`, { responseType: "json" })
       .pipe(
         
       );

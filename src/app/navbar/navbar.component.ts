@@ -11,10 +11,16 @@ export class NavbarComponent implements OnInit {
 
   showMenu:Boolean = false;
   showNavbar:Boolean = false;
+  userLogged:any = [];
 
   constructor(private route: Router, private authService: UserService) { }
   
   ngOnInit(): void {
+    this.userLogged = localStorage.getItem("user");
+    if(this.userLogged.length > 0){
+      this.userLogged = JSON.parse(this.userLogged);
+      
+    }
     // this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
     //   this.isAuthenticated = isLoggedIn;
     // });

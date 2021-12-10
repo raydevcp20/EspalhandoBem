@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './services/auth-guard.service';
+import { MyPostsComponent } from './my-posts/my-posts.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthGuard } from './services/auth-guard.service';
     UserDetailComponent,
     MyProfileComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    MyPostsComponent
   ],
   imports: [
     BrowserModule,

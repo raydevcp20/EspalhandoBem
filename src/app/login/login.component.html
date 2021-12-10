@@ -1,70 +1,112 @@
-<div class="my-16">
+<div class="bg-teal h-screen w-full text-center">
+	<img width="300" class="inline mb-8" src="../../assets/img/logo-branca.png" alt="logo">
+
 	<div class="container" id="container">
-	<div class="form-container sign-up-container">
+		<div class="form-container sign-up-container">
+			<form (ngSubmit)="createUser()" ngNativeValidate>
+				<h1>Create Account</h1>
+				<!-- <div class="social-container">
+					<a href="#" class="social"><i class="fa fa-facebook"></i></a>
+					<a href="#" class="social"><i class="fa fa-google"></i></a>
+					<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+				</div>
+				<span>or use your email for registration</span> -->
+				<p class="mb-0">Você é uma pessoa física ou jurídica?</p>
+				<div class="input-radio">
+					<div>
+						<input class="mr-2" type="radio" (click)="choiceOn('cpf')" id="cpf" name="typeID" value="CPF" required checked>
+						<label for="cpf">CPF</label>
+					</div>
+					<div>
+						<input class="mr-2" type="radio" (click)="choiceOn('cnpj')" id="cnpj" name="typeID" value="CNPJ" required>
+						<label for="cnpj">CNPJ</label>
+					</div>
+				</div>
 
-	<form (ngSubmit)="createUser()" ngNativeValidate>
-		<h1>Create Account</h1>
-		<div class="social-container">
-			<a href="#" class="social"><i class="fa fa-facebook"></i></a>
-			<a href="#" class="social"><i class="fa fa-google"></i></a>
-			<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+				<input type="text" name="name" [(ngModel)]="newUser.name" placeholder="Nome">
+				<input type="email" name="email" [(ngModel)]="newUser.email" placeholder="Email">
+				<div class="grid grid-cols-2 gap-2">
+					<div>
+						<input type="text" name="cpf" [(ngModel)]="newUser.cpf" *ngIf="newUser.typeNID == 'cpf'" placeholder="CPF">
+						<input type="text" name="cnpj" [(ngModel)]="newUser.cnpj" *ngIf="newUser.typeNID == 'cnpj'" placeholder="CNPJ">
+					</div>
+					<div>
+						<input type="tel" name="telefone" [(ngModel)]="newUser.telephone" placeholder="Telefone">
+					</div>
+				</div>
+				<input type="text" name="endereco" [(ngModel)]="newUser.street" *ngIf="newUser.typeNID == 'cnpj'" placeholder="Endereço">
+				<div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
+					<div>
+						<input type="text" name="cep" [(ngModel)]="newUser.cep" placeholder="CEP">
+					</div>
+					<div>
+						<input type="text" name="cidade" [(ngModel)]="newUser.city" placeholder="Cidade">
+					</div>
+				</div>
+				<div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
+					<div>
+						<input type="text" name="estado" [(ngModel)]="newUser.state" placeholder="Estado">
+					</div>
+					<div class="border-pink mt-2 rounded">
+						<select name="categoria" [(ngModel)]="newUser.idCategory" id="categoria" class="w-full mt-px">
+							<option value="" selected>Categoria</option>
+							<option *ngFor="let category of categoriesList" value="{{category.id}}">{{category.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="grid grid-cols-2 gap-2">
+					<div>
+						<input type="password" name="senha" [(ngModel)]="newUser.password" placeholder="Senha">
+					</div>
+					<div>
+						<input [ngClass]="{'border-error': !passwordEquals}" type="password" name="senha" (keyup)="checkPassword($event)" placeholder="Repita a senha">
+					</div>
+				</div>
+				<span *ngIf="!passwordEquals" >*Senhas diferentes</span>
+				<button class="mt-8" (click)="createUser()">Cadastrar</button>
+				<div class="to-mobile">
+					<p class="mb-0">Já possui uma conta? Acesse por aqui!</p>
+					<a class="ghost text-pink" (click)="signIn()">Sign In</a>
+				</div>
+			</form>
 		</div>
-		<span>or use your email for registration</span>
-		<p>Você é uma pessoa física ou jurídica?</p>
-		<input type="radio" id="cpf" name="cpf" value="CPF">
-		<label for="cpf">CPF</label><br>
-		<input type="radio" id="cnpj" name="cnpj" value="CNPJ">
-		<label for="cpf">CNPJ</label>
-		<input type="text" name="name" placeholder="Nome">
-		<input type="email" name="email" placeholder="Email">
-		<input type="number" name="cpf" placeholder="CPF">
-		<input type="tel" name="telefone" placeholder="Telefone">
-		<input type="text" name="endereco" placeholder="Endereço">
-		<input type="number" name="cep" placeholder="CEP">
-		<input type="text" name="cidade" placeholder="Cidade">
-		<input type="text" name="estado" placeholder="Estado">
-		<label for="categoria">Selecione uma categoria</label>
-		<select name="categoria" id="categoria">
-			<option value="A">A</option>
-			<option value="B">B</option>
-			<option value="C">C</option>
-			<option value="D">D</option>
-		</select>
-		<input type="password" name="senha" placeholder="Senha">
-		<input type="password" name="senha" placeholder="Repita a senha">
-		<button>Cadastrar</button>
-		<button>SignUp</button>
-	</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form (ngSubmit)="login()" ngNativeValidate>
-			<h1>Sign In</h1>
-			<div class="social-container">
-			<a href="#" class="social"><i class="fa fa-facebook"></i></a>
-			<a href="#" class="social"><i class="fa fa-google"></i></a>
-			<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
-		</div>
-		<span>or use your account</span>
-		<input type="email" name="email" [(ngModel)]="email" placeholder="Email">
-		<input type="password" name="password" [(ngModel)]="password" placeholder="Password">
-		<a href="#">Forgot Your Password</a>
 
-		<button>Sign In</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" (click)="signIn()">Sign In</button>
+		<div class="form-container sign-in-container">
+			
+			
+			<form (ngSubmit)="login()" ngNativeValidate>
+				<h1>Sign In</h1>
+				<!-- <div class="social-container">
+					<a href="#" class="social"><i class="fa fa-facebook"></i></a>
+					<a href="#" class="social"><i class="fa fa-google"></i></a>
+					<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+				</div>
+			<span>or use your account</span> -->
+			<input type="email" name="email" [(ngModel)]="email" placeholder="Email">
+			<input type="password" name="password" [(ngModel)]="password" placeholder="Password">
+			<a href="#">Forgot Your Password</a>
+			
+			<button>Sign In</button>
+			<div class="to-mobile">
+				<p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
+				<a class="ghost text-pink" (click)="signUp()">Sign Up</a>
 			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your details and start journey with us</p>
-				<button class="ghost" (click)="signUp()">Sign Up</button>
+			</form>
+		</div>
+
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<p>To keep connected with us please login with your personal info</p>
+					<button class="ghost text-pink" (click)="signIn()">Sign In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Friend!</h1>
+					<p>Enter your details and start journey with us</p>
+					<button class="ghost text-pink" (click)="signUp()">Sign Up</button>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </div>

@@ -37,7 +37,7 @@ export class UserService {
     return this.http
       .post(`${this.url}/createUser`, user, this.httpOptions)
       .pipe(
-
+        
       );
   }
 
@@ -60,5 +60,46 @@ export class UserService {
           this.errorHandlerService.handleError<{ token: string; userId: number}>("login")
         )
       );
+  }
+
+  saveLink(link:any){
+    console.log(link)
+    return this.http
+    .post(`${this.url}/saveLink`, link, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  getLinksByUser(userID: number){
+    return this.http
+    .get(`${this.url}/listPhotosbyUser/${userID}`, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  getById(userID:number){
+    return this.http
+    .get(`${this.url}/getById/${userID}`, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  updateUser(user: any){
+    return this.http
+    .put(`${this.url}/updateUser`, user, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  saveLinks(photos: any){
+    return this.http
+    .post(`${this.url}/saveLinkList`, photos, this.httpOptions)
+    .pipe(
+
+    );
   }
 }

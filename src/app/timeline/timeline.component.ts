@@ -15,6 +15,7 @@ export class TimelineComponent implements OnInit {
   createNewPost:Boolean = false;
   newPost: any = {};
   posts: any = [];
+  userLogged: any = [{ type_NID:'cpf'}];
   categoriesList: any = [];
   filterCategory:string = "Selecione uma categoria";
 
@@ -25,6 +26,14 @@ export class TimelineComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.userLogged = localStorage.getItem("user") || [];
+    if(this.userLogged.length > 0){
+      this.userLogged = [JSON.parse(this.userLogged)];
+      console.log(this.userLogged)
+    }else{
+      // this.userLogged.type_NID = 'cpf';
+    }
+
     this.categoryService.listAllCategories().subscribe(
       (data)=>{
         this.categoriesList = data;
@@ -32,6 +41,7 @@ export class TimelineComponent implements OnInit {
 
     this.postService.listAllPosts().subscribe(
       (data)=>{
+        console.log(data)
         this.posts = data;
       });
   }
@@ -46,33 +56,22 @@ export class TimelineComponent implements OnInit {
   }
 
   setFavorite(post:any){
-    if(post.favorite == 1){
-      post.favorite = 0;
-    }else{
-      post.favorite = 1;
+    if(this.userLogged){
+      if(post.favorite == 1){
+        post.favorite = 0;
+      }else{
+        post.favorite = 1;
+      }
+      this.postService.setFavorite(post).subscribe();
     }
-    this.postService.setFavorite(post).subscribe();
   }
 
   onNewPost():void{
-    this.newPost.user =  {
-      id: 1,
-      name: 'teste1',
-      type_NID: 'cnpj',
-      email: 'teste@gmail.com',
-      password: '123456',
-      description: 'lorem doafvsdifnsdf gdf',
-      id_category: 1,
-      cep: '1234567',
-      street: 'rua teste',
-      city: 'testeee',
-      state: 'estestes unidos',
-      cnpj: '193029234823',
-      cpf: null,
-      telephone: '12345678'
-    };
-    this.postService.createNewPost(this.newPost).subscribe();
-    this.newPost = {};
-    this.createNewPost = !this.createNewPost
+    this.newPost.user = this.userLogged;
+    if(this.userLogged.type_NID == 'cnpj'){
+      this.postService.createNewPost(this.newPost).subscribe();
+      this.newPost = {};
+      this.createNewPost = !this.createNewPost
+    }
   }
 }

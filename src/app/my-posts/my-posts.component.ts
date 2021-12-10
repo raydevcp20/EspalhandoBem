@@ -4,17 +4,18 @@ import { CategoryService } from '../services/category.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
-  selector: 'app-favorite',
-  templateUrl: './favorite.component.html',
-  styleUrls: ['./favorite.component.css']
+  selector: 'app-my-posts',
+  templateUrl: './my-posts.component.html',
+  styleUrls: ['./my-posts.component.css']
 })
-export class FavoriteComponent implements OnInit {
+export class MyPostsComponent implements OnInit {
+
   check:Boolean = false;
   showList:Boolean = false;
-  posts: any = [];
+  myPosts: any = [];
+  userLogged: any = [];
   categoriesList: any = [];
   filterCategory:string = "Selecione uma categoria";
-  userLogged:any = [];
 
   constructor(
     private router: Router,
@@ -31,10 +32,17 @@ export class FavoriteComponent implements OnInit {
         this.categoriesList = data;
       });
 
-    this.postService.filterByFavorites(this.userLogged.id).subscribe(
+    this.postService.getByUser(this.userLogged.id).subscribe(
       (data)=>{
-        this.posts = data;
+        this.myPosts = data;
       });
+  }
+
+  deletePost(post:any){
+    post.deleted = 1;
+    this.postService.deletePost(post).subscribe();
+
+    this.ngOnInit();
   }
 
   filterByCategory(category:any){
@@ -49,6 +57,5 @@ export class FavoriteComponent implements OnInit {
   navigateTo(url:String){
     this.router.navigate([url]);
   }
-
 
 }
