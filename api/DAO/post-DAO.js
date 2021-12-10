@@ -11,12 +11,16 @@ module.exports = class postDAO {
         // });
     }
 
-    listAll(){
-        return db.execute(`select * from posts where deleted != 1`);
+    listPostsByUser(userID){
+        return db.execute(`select p.*, u.name as nameUser FROM posts as p inner join users as u on p.id_user = u.id WHERE id_user = ${userID} and deleted != 1 ORDER BY p.post_date DESC`);
     }
 
-    listFavorites(){
-        return db.execute(`select * from posts where favorite = 1 and deleted != 1`);
+    listAll(){
+        return db.execute(`select p.*, u.name as nameUser FROM posts as p inner join users as u on p.id_user = u.id ORDER BY p.post_date DESC`);
+    }
+
+    listFavorites(userID){
+        return db.execute(`select p.*, u.name as nameUser FROM posts as p inner join users as u on p.id_user = u.id where favorite = 1 and deleted != 1 and id_user = ${userID}`);
     }
 
     editPost(post){

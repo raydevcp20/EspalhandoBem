@@ -21,7 +21,11 @@ router.post(
 );
 
 router.get(
-    '/listFavorites', auth, postController.listFavorites
+    '/listFavorites/:id', auth, postController.listFavorites
+);
+
+router.get(
+    '/listPostsByUser/:id', auth, postController.listPostsByUser
 );
 
 router.get(

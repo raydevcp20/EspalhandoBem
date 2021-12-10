@@ -18,10 +18,26 @@ exports.list = async (req, res, next) => {
     }
 }
 
-exports.listbyId = async (req, res, next) => {
+exports.getbyId = async (req, res, next) => {
   try {
-    const [result] = await user.listbyId();
-    res.status(200).json(result);
+    let userID = req.params.id;
+    const result = await user.listbyId(userID);
+
+    let objFormated = await user.getById(result[0][0]);
+      result[0] = objFormated[0][0];
+
+    res.status(200).json(result[0]);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    const result = await user.updateUser(req.body);
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -76,6 +92,11 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
+    if(userLogged[0][0].type_NID == 'cnpj'){
+      let objFormated = await user.getById(userLogged[0][0]);
+      userLogged[0][0] = objFormated[0][0];
+    }
+    
     const storedUser = userLogged[0][0];
     let hashpassword = md5(password);
 

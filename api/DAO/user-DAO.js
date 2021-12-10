@@ -14,6 +14,16 @@ module.exports = class userDAO {
     list(){
         return db.execute(`SELECT * FROM users`);
     }
+    
+    getById(user){
+        if(user.type_NID == 'cnpj'){
+            return db.execute(`SELECT u.*, c.name as categoryName 
+            FROM users as u 
+            inner join category as c 
+            on u.id_category = c.id 
+            WHERE u.id = ${user.id}`);
+        }
+    }
 
     listbyId(id){
         return db.execute(`SELECT * FROM users WHERE id = ${id}`);
@@ -28,32 +38,43 @@ module.exports = class userDAO {
     }
 
     login(email){
-        return db.execute(`SELECT * FROM users WHERE email = '${email}'`);
+        return db.execute(`SELECT * from users WHERE email = '${email}'`);
+    }
+
+    updateUser(user){
+        return db.execute(`UPDATE users
+        SET email = '${user.email}', telephone = '${user.telephone}', description = '${user.description}', 
+        cep = '${user.cep}', street = '${user.street}', city = '${user.city}', state='${user.state}' 
+        WHERE id = ${user.id};`);
     }
 
     async createUser(user){
         let url = "";
         let existUser = [];
-        
-        if(user.typeNID == "cnpj"){
-            existUser = this.listbyCNPJ(user.cnpj);
-            if(!existUser){
-                url = `INSERT INTO users (name, type_NID, email, password, description, id_category, cep, street, city, state, cnpj, telephone) 
-                values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.description}', ${user.idCategory}, '${user.cep}', '${user.street}',  '${user.city}', '${user.state}', '${user.cnpj}', '${user.telephone}' )`;
-            }else {
-                return "Error: usuario já existente"
+
+        try {
+            if(user.typeNID == "cnpj"){
+                existUser = await this.listbyCNPJ(user.cnpj);
+                if(existUser[0].length === 0){
+                    url = `INSERT INTO users (name, type_NID, email, password, id_category, cep, street, city, state, cnpj, telephone) 
+                    values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', ${user.idCategory}, '${user.cep}', 
+                    '${user.street}',  '${user.city}', '${user.state}', '${user.cnpj}', '${user.telephone}' )`;
+                }else {
+                    return "Error: usuario já existente"
+                }
+            }else if(user.typeNID == "cpf"){
+                existUser = await this.listbyCPF(user.cpf);
+                if(existUser[0].length === 0){
+                    url = `INSERT INTO users (name, type_NID, email, password, cpf, telephone) 
+                            values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.cpf}', '${user.telephone}' )`;
+                }else {
+                    return "Error: usuario já existente"
+                }
             }
-        }else if(user.typeNID == "cpf"){
-            existUser = await this.listbyCPF(user.cpf);
-            // console.log(existUser[0]);
-            if(!existUser[0]){
-                url = `INSERT INTO users (name, type_NID, email, password, cpf, telephone) 
-                        values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.cpf}', '${user.telephone}' )`;
-            }else {
-                return "Error: usuario já existente"
-            }
+            return db.execute(url);
+        } catch (error) {
+            console.log(error)
         }
-        return db.execute(url);
     }
 
 }

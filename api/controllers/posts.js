@@ -16,9 +16,22 @@ exports.listAllPosts = async (req, res, next) => {
       }
 }
 
+exports.listPostsByUser = async (req, res, next) => {
+  try {
+      const [listUserPosts] = await post.listPostsByUser(req.params.id);
+      res.status(200).json(listUserPosts);
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    }
+}
+
 exports.listFavorites = async (req, res, next) => {
   try {
-      const [postsFavorites] = await post.listFavorites();
+      let userID = req.params.id;
+      const [postsFavorites] = await post.listFavorites(userID);
       res.status(200).json(postsFavorites);
     } catch (err) {
       if (!err.statusCode) {

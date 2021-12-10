@@ -4,6 +4,7 @@ const app = express();
 
 const authRoutes = require('./routes/auth');
 const postsRoutes = require('./routes/posts');
+const photoRoutes = require('./routes/photo')
 
 // parse application/json
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoutes);
 app.use('/auth', postsRoutes);
+app.use('/auth', photoRoutes);
 
 
 app.listen(3000, () =>{
