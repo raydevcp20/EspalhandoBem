@@ -20,6 +20,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './services/auth-guard.service';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,8 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

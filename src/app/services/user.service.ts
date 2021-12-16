@@ -63,7 +63,6 @@ export class UserService {
   }
 
   saveLink(link:any){
-    console.log(link)
     return this.http
     .post(`${this.url}/saveLink`, link, this.httpOptions)
     .pipe(
@@ -71,7 +70,15 @@ export class UserService {
     );
   }
 
-  getLinksByUser(userID: number){
+  setFavorite(user:any){
+    return this.http
+    .put(`${this.url}/setFavorite`, user, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  getPhotosByUser(userID: number){
     return this.http
     .get(`${this.url}/listPhotosbyUser/${userID}`, this.httpOptions)
     .pipe(

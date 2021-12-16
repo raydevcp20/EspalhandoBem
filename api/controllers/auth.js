@@ -37,7 +37,29 @@ exports.getbyId = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
+    // console.log(req.body)
     const result = await user.updateUser(req.body);
+    // console.log(result[0].affectedRows)
+    if(result[0].affectedRows > 0){
+      res.status(200).json({ user : req.body, message: "User editado com sucesso"});
+    }
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
+exports.setFavorite = async (req, res, next) => {
+  try {
+    
+    // console.log(userID)
+    const result = await user.setFavorite(req.body);
+    console.log(result[0].affectedRows)
+    if(result[0].affectedRows > 0){
+      res.status(200).json({ user : req.body, message: "User editado com sucesso"});
+    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -68,7 +90,7 @@ exports.createUser = async (req, res, next) => {
     if(result != "Error: usuario já existente"){
         res.status(201).json({ message: 'User registered!' });
     }else{
-        res.status(500).json({ message: 'Usuario já registrado' });
+        res.status(400).json({ message: 'Usuario já registrado' });
     }
   } catch (err) {
     if (!err.statusCode) {

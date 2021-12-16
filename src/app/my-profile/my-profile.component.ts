@@ -24,37 +24,41 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLogged = localStorage.getItem("user");
+    console.log(this.userLogged)
     this.userLogged = JSON.parse(this.userLogged);
-    console.log(this.userLogged);
+
     this.getLinks();
   }
 
   getLinks(){
-    this.userService.getLinksByUser(this.userLogged.id).subscribe(
+    this.userService.getPhotosByUser(this.userLogged.id).subscribe(
       (data:any)=>{
-        console.log(data)
         this.pictures = data;
       }
     );
   }
 
   addNewLink():void{
-    console.log(this.userLogged.id)
     this.newLink.id_user = this.userLogged.id;
-    console.log(this.newLink);
     this.userService.saveLink(this.newLink).subscribe();
 
     this.addLink = !this.addLink;
+    this.getLinks();
   }
 
   editData():void{
-    console.log(this.newLink);
     this.userService.saveLink(this.newLink).subscribe();
   }
 
   editProfile():void{
-    console.log(this.userLogged);
-    this.userService.updateUser(this.userLogged).subscribe();
+    this.userService.updateUser(this.userLogged).subscribe(
+      (data:any)=>{
+        data.user = JSON.stringify(data.user);
+        console.log(data.user)
+        localStorage.setItem("user", data.user);
+        this.ngOnInit();
+      }
+    );
     this.editingData = !this.editingData
   }
 

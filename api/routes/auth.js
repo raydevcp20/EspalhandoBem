@@ -14,12 +14,12 @@ const categoryController = require('../controllers/category');
 router.post(
     '/createUser',
     [
-        body('name').trim().not().isEmpty(),
-        body('email')
-        .isEmail()
-        .withMessage('Please enter a valid email.')
-        .normalizeEmail(),
-        body('password').trim().isLength({ min: 7 }),
+        // body('name').trim().not().isEmpty(),
+        // body('email')
+        // .isEmail()
+        // .withMessage('Please enter a valid email.')
+        // .normalizeEmail(),
+        // body('password').trim().isLength({ min: 7 }),
     ],
     authController.createUser
 );
@@ -45,7 +45,7 @@ router.get('/listCategories', categoryController.listCategories);
 
 router.post('/login', authController.login);
 
-
+router.put('/setFavorite', auth, authController.setFavorite)
 
 
 

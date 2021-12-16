@@ -81,16 +81,16 @@
 					<a href="#" class="social"><i class="fa fa-google"></i></a>
 					<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
 				</div>
-			<span>or use your account</span> -->
-			<input type="email" name="email" [(ngModel)]="email" placeholder="Email">
-			<input type="password" name="password" [(ngModel)]="password" placeholder="Password">
-			<a href="#">Forgot Your Password</a>
-			
-			<button>Sign In</button>
-			<div class="to-mobile">
-				<p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
-				<a class="ghost text-pink" (click)="signUp()">Sign Up</a>
-			</div>
+				<span>or use your account</span> -->
+				<input type="email" name="email" [(ngModel)]="email" placeholder="Email" required>
+				<input type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+				<a href="#">Forgot Your Password</a>
+				
+				<button [disabled]="!email && !password">Sign In</button>
+				<div class="to-mobile">
+					<p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
+					<a class="ghost text-pink" (click)="signUp()">Sign Up</a>
+				</div>
 			</form>
 		</div>
 

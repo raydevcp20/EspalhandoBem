@@ -16,17 +16,16 @@ module.exports = class postDAO {
     }
 
     listAll(){
-        return db.execute(`select p.*, u.name as nameUser FROM posts as p inner join users as u on p.id_user = u.id ORDER BY p.post_date DESC`);
+        return db.execute(`select p.*, u.name as nameUser, u.id_category as idCategory FROM posts as p inner join users as u on p.id_user = u.id ORDER BY p.post_date DESC`);
     }
 
     listFavorites(userID){
-        return db.execute(`select p.*, u.name as nameUser FROM posts as p inner join users as u on p.id_user = u.id where favorite = 1 and deleted != 1 and id_user = ${userID}`);
+        return db.execute(`select p.*, u.favorited, u.user_favorited, u.name as nameUser from posts as p inner join users as u on p.id_user = u.id where user_favorited = ${userID};`);
     }
 
     editPost(post){
         return db.execute(`UPDATE posts
-        SET deleted = ${post.deleted}, favorite = ${post.favorite}
-        WHERE id = ${post.id};`);
+        SET deleted = ${post.deleted} WHERE id = ${post.id};`);
     }
 
     createPost(post){

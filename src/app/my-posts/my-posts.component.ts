@@ -15,6 +15,7 @@ export class MyPostsComponent implements OnInit {
   myPosts: any = [];
   userLogged: any = [];
   categoriesList: any = [];
+  postsPure: any = [];
   filterCategory:string = "Selecione uma categoria";
 
   constructor(
@@ -35,6 +36,7 @@ export class MyPostsComponent implements OnInit {
     this.postService.getByUser(this.userLogged.id).subscribe(
       (data)=>{
         this.myPosts = data;
+        this.postsPure = [...this.myPosts];
       });
   }
 
@@ -45,8 +47,23 @@ export class MyPostsComponent implements OnInit {
     this.ngOnInit();
   }
 
+  filterByName(event: any){
+    this.myPosts = this.postsPure.filter((post:any)=>{
+      return post.title.trim().toUpperCase().includes(event.target.value.trim().toUpperCase());
+    })
+  }
+
   filterByCategory(category:any){
+    if(category == "all"){
+      this.myPosts = this.postsPure;
+      this.showList = !this.showList;
+      return
+    }
     this.filterCategory = category.name;
+
+    this.myPosts = this.postsPure.filter((post:any)=>{
+      return post.idCategory == category.id;
+    })
     this.showList = !this.showList;
   }
 

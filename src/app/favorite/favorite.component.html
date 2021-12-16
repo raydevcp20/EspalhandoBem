@@ -9,7 +9,7 @@
                     <div class="search-list">
                         <!-- <label for="price" class="block text-sm font-medium text-gray-700">Price</label> -->
                         <div class="mt-1 relative rounded-md shadow-sm ">
-                            <input type="text" name="price" id="price" class="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Buscar...">
+                            <input type="text" (keyup)="filterByName($event)" name="price" id="price" class="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Buscar...">
                             <div class="absolute inset-y-0 right-0 flex items-center bg-yellow p-2 rounded-r-lg text-pink">
                                 <i class="fa fa-search"></i>
                             </div>
@@ -30,7 +30,12 @@
                             </button>
                         
                             <ul [ngClass]="{ 'hidden' : !showList}" class="cursor-pointer absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-                                <li *ngFor="let category of categoriesList" (click)="filterByCategory(category)" class="cursor-pointer text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-pink " id="listbox-option-0" role="option" >
+                                <li (click)="filterByCategory('all')" class="cursor-pointer text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-pink ">
+                                    <div class="font-normal ml-3 block truncate">
+                                        Todos
+                                    </div>
+                                </li>
+                                <li *ngFor="let category of categoriesList" (click)="filterByCategory(category)" class="cursor-pointer text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-pink " role="option" >
                                     <div class="font-normal ml-3 block truncate">
                                         {{category.name}}
                                     </div>
@@ -42,7 +47,7 @@
                 </div>
 
                 <div class="flex items-center justify-end md:col-span-2 col-span-2 sm:col-span-7">
-                    <button class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink-600 hover:border-pink-600" type="button">
+                    <button (click)="ngOnInit()" class="transition duration-300 ease-in-out py-1 px-3 bg-pink text-white rounded font-semibold hover:bg-white hover:text-pink-600 hover:border-pink-600" type="button">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>

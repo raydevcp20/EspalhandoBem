@@ -41,6 +41,11 @@ module.exports = class userDAO {
         return db.execute(`SELECT * from users WHERE email = '${email}'`);
     }
 
+    setFavorite(user){
+        return db.execute(`UPDATE users
+        SET favorited = '${user.favorited}', user_favorited = ${user.user_favorited} WHERE id = ${user.id};`);
+    }
+
     updateUser(user){
         return db.execute(`UPDATE users
         SET email = '${user.email}', telephone = '${user.telephone}', description = '${user.description}', 
@@ -51,7 +56,6 @@ module.exports = class userDAO {
     async createUser(user){
         let url = "";
         let existUser = [];
-
         try {
             if(user.typeNID == "cnpj"){
                 existUser = await this.listbyCNPJ(user.cnpj);

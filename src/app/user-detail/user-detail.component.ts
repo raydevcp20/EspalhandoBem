@@ -11,6 +11,8 @@ export class UserDetailComponent implements OnInit {
   favorite:Boolean = false;
   userID:any = undefined;
   userDetail:any = [];
+  photos:any = [];
+  userLogged:any = [];
 
   constructor(
     private router: ActivatedRoute,
@@ -21,11 +23,38 @@ export class UserDetailComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.userLogged = localStorage.getItem("user") || [];
+    if(this.userLogged.length > 0){
+      this.userLogged = JSON.parse(this.userLogged);
+      console.log(this.userLogged)
+    }else{
+      // this.userLogged.type_NID = 'cpf';
+    }
+
     this.userService.getById(this.userID).subscribe(
       (data)=>{
-        console.log(data)
         this.userDetail = data;
+        console.log(this.userDetail)
       });
+
+      this.userService.getPhotosByUser(this.userID).subscribe(
+        (data:any)=>{
+        this.photos = data;
+
+      });
+  }
+
+  setFavorite(){
+    if(this.userDetail){
+      if(this.userDetail.favorited == 1){
+        this.userDetail.favorited = 0;
+        this.userDetail.user_favorited = null;
+      }else{
+        this.userDetail.favorited = 1;
+        this.userDetail.user_favorited = this.userLogged.id;
+      }
+      this.userService.setFavorite(this.userDetail).subscribe();
+    }
   }
 
 }

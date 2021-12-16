@@ -42,7 +42,19 @@ exports.listFavorites = async (req, res, next) => {
 }
 
 exports.createPost = async (req, res, next) => {
-    const result = await post.createPost(req.body);
+  
+  try {
+      const result = await post.createPost(req.body);
+      if(result){
+        res.status(200).json({message: "Post criado com sucesso"});
+      }
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    }
+
 }
 
 exports.editPost = async (req, res, next) => {

@@ -15,6 +15,7 @@ export class FavoriteComponent implements OnInit {
   categoriesList: any = [];
   filterCategory:string = "Selecione uma categoria";
   userLogged:any = [];
+  postsPure: any = [];
 
   constructor(
     private router: Router,
@@ -33,12 +34,29 @@ export class FavoriteComponent implements OnInit {
 
     this.postService.filterByFavorites(this.userLogged.id).subscribe(
       (data)=>{
+        console.log(data)
         this.posts = data;
+        this.postsPure = [...this.posts];
       });
   }
 
+  filterByName(event: any){
+    this.posts = this.postsPure.filter((post:any)=>{
+      return post.title.trim().toUpperCase().includes(event.target.value.trim().toUpperCase());
+    })
+  }
+
   filterByCategory(category:any){
+    if(category == "all"){
+      this.posts = this.postsPure;
+      this.showList = !this.showList;
+      return
+    }
     this.filterCategory = category.name;
+
+    this.posts = this.postsPure.filter((post:any)=>{
+      return post.idCategory == category.id;
+    })
     this.showList = !this.showList;
   }
 

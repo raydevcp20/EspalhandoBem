@@ -3,8 +3,8 @@
         <div class="box-header text-lg">
             <div>
                 <h1 class="text-3xl text-pink font-bold">{{userDetail.name}}</h1>
-                <!-- <i class="text-3xl text-yellow far fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="!favorite"></i>
-                <i class="text-3xl text-yellow fas fa-star cursor-pointer" (click)="favorite = !favorite" *ngIf="favorite"></i> -->
+                <i class="text-3xl text-yellow far fa-star cursor-pointer" (click)="setFavorite()" *ngIf="userDetail.favorited == 0"></i>
+                <i class="text-3xl text-yellow fas fa-star cursor-pointer" (click)="setFavorite()" *ngIf="userDetail.favorited == 1"></i>
             </div>
             <h3 class="text-xl">{{userDetail.categoryName}}</h3>
         </div>
@@ -27,36 +27,8 @@
             </p>
 
             <div class="lookbook-grid">
-                <figure class="model">
-                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
-                    <!-- <figcaption class="model--caption">
-                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
-                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
-                    </figcaption> -->
-                </figure>
-                <figure class="model">
-                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
-                    <!-- <figcaption class="model--caption">
-                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
-                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
-                    </figcaption> -->
-                </figure>
-                <figure class="model">
-                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
-                    <!-- <figcaption class="model--caption">
-                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
-                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
-                    </figcaption> -->
-                </figure>
-                <figure class="model">
-                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
-                    <!-- <figcaption class="model--caption">
-                      <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
-                      <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
-                    </figcaption> -->
-                </figure>
-                <figure class="model">
-                    <img src="https://assets.codepen.io/t-1869/fridays.png" />
+                <figure class="model" *ngFor="let photo of photos">
+                    <img src="{{photo.link}}" />
                     <!-- <figcaption class="model--caption">
                       <h3 class="model-hed"><a href="#">Muscles McTouchdown</a></h3>
                       <p>Prof. McTouchdown is 5'5", wearing a size S <a href="#">Fridays Away Blaseball Jersey</a>.<p>
