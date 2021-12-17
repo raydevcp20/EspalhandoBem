@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../services/category.service';
 import { UserService } from '../services/user.service';
 
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private categoryService: CategoryService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -54,18 +56,22 @@ export class LoginComponent implements OnInit {
     if(this.newUser.typeNID == 'cpf'){
       let result = this.validadorCPF(this.newUser.cpf);
       if(!result){
+        debugger;
+        this.toastr.error('Error: ', 'CPF não validado');
         return;
       }
     }else{
       let result = this.validarCNPJ(this.newUser.cnpj);
       if(!result){
+        this.toastr.error('Error: ', 'CNPJ não validado');
         return;
       }
     }
     
-    this.userService.createUser(this.newUser).subscribe((msg:string) => {
+    this.userService.createUser(this.newUser).subscribe((msg:any) => {
       console.log(msg);
-      this.router.navigate(["login"]);
+      this.toastr.success('Criação de usuário bem sucedida ', msg.message);
+      this.router.navigate(["login"]);  
     });
   }
 
@@ -100,7 +106,7 @@ export class LoginComponent implements OnInit {
   }
 
   validadorCPF(strCPFe: any){
-    var strCPF = strCPFe.target.value;
+    var strCPF = strCPFe;
     let Soma;
     let Resto;
     Soma = 0;
@@ -122,7 +128,7 @@ export class LoginComponent implements OnInit {
   }
 
   validarCNPJ(cnpje :any) {
-    var cnpj = cnpje.target.value;
+    var cnpj = cnpje;
 
     cnpj = cnpj.replace(/[^\d]+/g,'');
  

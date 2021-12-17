@@ -84,8 +84,10 @@ exports.createUser = async (req, res, next) => {
     //   email: email,
     //   password: password,
     // };
+    console.log(req.body)
     req.body.password = md5(req.body.password);
     const result = await user.createUser(req.body);
+    console.log(result)
     
     if(result != "Error: usuario já existente"){
         res.status(201).json({ message: 'User registered!' });
@@ -106,8 +108,8 @@ exports.login = async (req, res, next) => {
 
   try {
     const userLogged = await user.login(email);
-    
-    if (userLogged[0].length !== 1) {
+    console.log(userLogged[0]);
+    if (userLogged[0].length === 0) {
       const error = new Error('A user with this email could not be found.');
       error.statusCode = 401;
       res.status(error.statusCode).json({ message: 'A user with this email could not be found.' });
