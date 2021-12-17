@@ -71,7 +71,8 @@ export class LoginComponent implements OnInit {
     this.userService.createUser(this.newUser).subscribe((msg:any) => {
       console.log(msg);
       this.toastr.success('Criação de usuário bem sucedida ', msg.message);
-      this.router.navigate(["login"]);  
+      // this.router.navigate(["login"]); 
+      window.location.reload(); 
     });
   }
 
