@@ -26,6 +26,9 @@ app.use((req, res, next) => {
     next();
 });
 
+// app.use('/', (req,res)=>{
+//   console.log("daaleeeee")
+// });
 app.use('/auth', authRoutes);
 app.use('/auth', postsRoutes);
 app.use('/auth', photoRoutes);

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class PostsService {
-  private url = "http://localhost:3000/auth";
+  private url = "https://espalhando-o-bem.herokuapp.com/auth";
   
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
