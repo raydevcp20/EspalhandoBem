@@ -13,7 +13,7 @@ export class MyPostsComponent implements OnInit {
   check:Boolean = false;
   showList:Boolean = false;
   myPosts: any = [];
-  userLogged: any = [];
+  userLogged: any = {};
   categoriesList: any = [];
   postsPure: any = [];
   filterCategory:string = "Selecione uma categoria";
@@ -32,7 +32,6 @@ export class MyPostsComponent implements OnInit {
       (data)=>{
         this.categoriesList = data;
       });
-
     this.postService.getByUser(this.userLogged.id).subscribe(
       (data)=>{
         this.myPosts = data;
