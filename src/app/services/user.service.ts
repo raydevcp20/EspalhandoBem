@@ -10,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class UserService {
-  private url = "https://espalhando-o-bem.herokuapp.com/auth";
+  private url = "http://espalhando-o-bem.herokuapp.com/auth";
   isUserLoggedIn:boolean = false;
   userId: number = 0;
 

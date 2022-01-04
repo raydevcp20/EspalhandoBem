@@ -57,6 +57,7 @@ module.exports = class userDAO {
         let url = "";
         let existUser = [];
         try {
+            console.log(user)
             if(user.typeNID == "cnpj"){
                 existUser = await this.listbyCNPJ(user.cnpj);
                 if(existUser[0].length === 0){
@@ -68,6 +69,7 @@ module.exports = class userDAO {
                 }
             }else if(user.typeNID == "cpf"){
                 existUser = await this.listbyCPF(user.cpf);
+                console.log(existUser[0])
                 if(existUser[0].length === 0){
                     url = `INSERT INTO users (name, type_NID, email, password, cpf, telephone) 
                             values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.cpf}', '${user.telephone}' )`;

@@ -96,7 +96,7 @@ export class TimelineComponent implements OnInit {
     if(this.userLogged[0].type_NID == 'cnpj'){
       this.postService.createNewPost(this.newPost).subscribe(
         (msg:any)=>{ 
-          this.toastr.success('Post criado', msg);
+          this.toastr.success('Post criado', msg.message);
         }
       );
       this.newPost = {};
