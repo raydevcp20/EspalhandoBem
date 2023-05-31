@@ -4,13 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from "rxjs";
 import { first, catchError, tap } from "rxjs/operators";
 import { ErrorHandlerService } from './error-handler.service';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private url = "http://espalhando-o-bem.herokuapp.com/auth";
+  private url = "http://localhost:3000/auth";
   isUserLoggedIn:boolean = false;
   userId: number = 0;
 
@@ -21,8 +20,7 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private errorHandlerService: ErrorHandlerService,
-    private router: Router,
-    private cookieService: CookieService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -105,6 +103,14 @@ export class UserService {
   saveLinks(photos: any){
     return this.http
     .post(`${this.url}/saveLinkList`, photos, this.httpOptions)
+    .pipe(
+
+    );
+  }
+
+  getAddressByViaCep(cep: string){
+    return this.http
+    .get(`https://viacep.com.br/ws/${cep}/json/`)
     .pipe(
 
     );

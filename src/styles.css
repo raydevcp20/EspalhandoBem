@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "variables.css";
 
 main{
@@ -50,8 +51,17 @@ main{
 .hover\:border-pink-600:hover{
     border: 1px solid var(--pink) !important;
 }
-.focus\:border-teal-darker{
-    border: 1px solid var(--teal-darker) !important;
+.focus\:border-teal:focus{
+  border: 2px solid var(--teal) !important;
+}
+.focus\:border-teal-darker:focus{
+    border: 2px solid var(--teal-darker) !important;
+}
+.focus\:border-pink:focus{
+  border: 1px solid var(--pink) !important;
+}
+.focus\:border-pink-darker:focus{
+  border: 1px solid var(--pink-darker) !important;
 }
 .hover\:text-teal:hover{
     color: var(--teal) !important;
@@ -70,10 +80,10 @@ main{
 }
 
 .border-error{
-    border: 2px solid #D02E3C !important;
+    border: 2px solid var(--red) !important;
 }
 .border-success{
-    border: 1px solid #5DD941 !important;
+    border: 1px solid var(--green) !important;
 }
 
 .border-3{
@@ -86,6 +96,14 @@ main{
 }
 .search-list div input:focus{
     border: 2px solid var(--yellow) !important;
+}
+
+.alert-component{
+  border-radius: 2px;
+  text-align: left;
+  width: 100%;
+  color: var(--red);
+  font-size: .8rem;
 }
 
 

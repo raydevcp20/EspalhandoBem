@@ -14,9 +14,8 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './services/auth-guard.service';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 
@@ -39,6 +38,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
@@ -49,7 +49,6 @@ import { ToastrModule } from 'ngx-toastr';
       useClass: AuthInterceptorService,
       multi: true,
     },
-    CookieService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

@@ -1,112 +1,239 @@
-<div class="bg-teal w-full text-center">
-	<img width="300" class="inline mb-8" src="../../assets/img/logo-branca.png" alt="logo">
+<div class="bg-teal w-full text-center h-screen">
+  <img
+    width="300"
+    class="inline mb-8"
+    src="../../assets/img/logo-branca.png"
+    alt="logo"
+  />
 
-	<div class="container" id="container">
-		<div class="form-container sign-up-container">
-			<form (ngSubmit)="createUser()" ngNativeValidate>
-				<h1>Create Account</h1>
-				<!-- <div class="social-container">
-					<a href="#" class="social"><i class="fa fa-facebook"></i></a>
-					<a href="#" class="social"><i class="fa fa-google"></i></a>
-					<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
-				</div>
-				<span>or use your email for registration</span> -->
-				<p class="mb-0">Você é uma pessoa física ou jurídica?</p>
-				<div class="input-radio">
-					<div>
-						<input class="mr-2" type="radio" (click)="choiceOn('cpf')" id="cpf" name="typeID" value="CPF" required checked>
-						<label for="cpf">CPF</label>
-					</div>
-					<div>
-						<input class="mr-2" type="radio" (click)="choiceOn('cnpj')" id="cnpj" name="typeID" value="CNPJ" required>
-						<label for="cnpj">CNPJ</label>
-					</div>
-				</div>
+  <div class="container" id="container">
+    <div class="form-container sign-up-container">
+      <form [formGroup]="userForm" (ngSubmit)="createUser()">
+        <h1>Criar conta</h1>
+        <p class="mb-0">Você é uma pessoa física ou jurídica?</p>
+        <div class="input-radio">
+          <div>
+            <input
+              class="mr-2"
+              type="radio"
+              (click)="choiceOn('cpf')"
+              id="cpf"
+              name="typeID"
+              value="CPF"
+              required
+              checked
+            />
+            <label for="cpf">CPF</label>
+          </div>
+          <div>
+            <input
+              class="mr-2"
+              type="radio"
+              (click)="choiceOn('cnpj')"
+              id="cnpj"
+              name="typeID"
+              value="CNPJ"
+              required
+            />
+            <label for="cnpj">CNPJ</label>
+          </div>
+        </div>
 
-				<input type="text" name="name" [(ngModel)]="newUser.name" placeholder="Nome">
-				<input type="email" name="email" [(ngModel)]="newUser.email" placeholder="Email">
-				<div class="grid grid-cols-2 gap-2">
-					<div>
-						<input type="text" name="cpf" [(ngModel)]="newUser.cpf" *ngIf="newUser.typeNID == 'cpf'" placeholder="CPF">
-						<input type="text" name="cnpj" [(ngModel)]="newUser.cnpj" *ngIf="newUser.typeNID == 'cnpj'" placeholder="CNPJ">
-					</div>
-					<div>
-						<input type="tel" name="telefone" [(ngModel)]="newUser.telephone" placeholder="Telefone">
-					</div>
-				</div>
-				<input type="text" name="endereco" [(ngModel)]="newUser.street" *ngIf="newUser.typeNID == 'cnpj'" placeholder="Endereço">
-				<div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
-					<div>
-						<input type="text" name="cep" [(ngModel)]="newUser.cep" placeholder="CEP">
-					</div>
-					<div>
-						<input type="text" name="cidade" [(ngModel)]="newUser.city" placeholder="Cidade">
-					</div>
-				</div>
-				<div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
-					<div>
-						<input type="text" name="estado" [(ngModel)]="newUser.state" placeholder="Estado">
-					</div>
-					<div class="border-pink mt-2 rounded">
-						<select name="categoria" [(ngModel)]="newUser.idCategory" id="categoria" class="w-full mt-px">
-							<option value="" selected>Categoria</option>
-							<option *ngFor="let category of categoriesList" value="{{category.id}}">{{category.name}}</option>
-						</select>
-					</div>
-				</div>
-				<div class="grid grid-cols-2 gap-2">
-					<div>
-						<input type="password" name="senha" [(ngModel)]="newUser.password" placeholder="Senha">
-					</div>
-					<div>
-						<input [ngClass]="{'border-error': !passwordEquals}" type="password" name="senha" (keyup)="checkPassword($event)" placeholder="Repita a senha">
-					</div>
-				</div>
-				<span *ngIf="!passwordEquals" >*Senhas diferentes</span>
-				<button class="mt-8" (click)="createUser()">Cadastrar</button>
-				<div class="to-mobile">
-					<p class="mb-0">Já possui uma conta? Acesse por aqui!</p>
-					<a class="ghost text-pink" (click)="signIn()">Sign In</a>
-				</div>
-			</form>
-		</div>
+        <input
+          class="focus:border-pink"
+          type="text"
+          formControlName="name"
+          placeholder="Nome"
+        />
+        <input
+          class="focus:border-pink"
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <div
+          class="alert-component"
+          *ngIf="userForm.controls.email.touched && !validateEmail()"
+        >
+          Digite um formato de email válido.
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input
+            class="focus:border-pink"
+            type="text"
+            formControlName="cpf"
+            *ngIf="newUser.typeNID == 'cpf'"
+            placeholder="CPF"
+          />
+          <input
+            class="focus:border-pink"
+            type="text"
+            formControlName="cnpj"
+            *ngIf="newUser.typeNID == 'cnpj'"
+            placeholder="CNPJ"
+          />
+          <input
+            class="focus:border-pink"
+            type="tel"
+            formControlName="phone"
+            placeholder="Telefone"
+          />
+        </div>
+        <div
+          class="alert-component"
+          *ngIf="
+            newUser.typeNID == 'cpf' &&
+            userForm.controls.cpf.touched &&
+            !validateCPF()
+          "
+        >
+          Digite um formato de CPF válido.
+        </div>
+        <div
+          class="alert-component"
+          *ngIf="
+            newUser.typeNID == 'cnpj' &&
+            userForm.controls.cnpj.touched &&
+            !validateCNPJ()
+          "
+        >
+          Digite um formato de CNPJ válido.
+        </div>
+        <div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
+          <div>
+            <input
+              class="focus:border-pink"
+              type="text"
+              formControlName="cep"
+              placeholder="CEP"
+              (blur)="getAddressByViaCep()"
+            />
+          </div>
+          <div>
+            <input
+              class="disabled focus:border-pink"
+              type="text"
+              formControlName="city"
+              placeholder="Cidade"
+            />
+          </div>
+        </div>
+        <div
+          class="alert-component"
+          *ngIf="
+            newUser.typeNID == 'cnpj' &&
+            userForm.controls.cep.touched &&
+            !validateCEP()
+          "
+        >
+          Digite um formato de CEP válido.
+        </div>
+        <input
+          class="disabled focus:border-pink"
+          type="text"
+          formControlName="street"
+          *ngIf="newUser.typeNID == 'cnpj'"
+          placeholder="Endereço"
+        />
+        <div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
+          <input
+            class="disabled focus:border-pink"
+            type="text"
+            formControlName="state"
+            placeholder="Estado"
+          />
+          <div class="border-pink mt-2 rounded">
+            <select name="categoria" id="categoria" class="w-full mt-px">
+              <option value="" selected>Categoria</option>
+              <option
+                *ngFor="let category of categoriesList"
+                value="{{ category.id }}"
+              >
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <input
+              class="focus:border-pink"
+              type="password"
+              name="senha"
+              placeholder="Senha"
+            />
+          </div>
+          <div>
+            <input
+              class="focus:border-pink"
+              [ngClass]="{ 'border-error': !passwordEquals }"
+              type="password"
+              name="senha"
+              (keyup)="checkPassword($event)"
+              placeholder="Repita a senha"
+            />
+          </div>
+        </div>
+        <span *ngIf="!passwordEquals">*Senhas diferentes</span>
+        <button
+          class="mt-8"
+          (click)="createUser()"
+          [disabled]="userForm.invalid"
+        >
+          Cadastrar
+        </button>
+        <div class="to-mobile">
+          <p class="mb-0">Já possui uma conta? Acesse por aqui!</p>
+          <a class="ghost text-pink" (click)="signIn()">Sign In</a>
+        </div>
+      </form>
+    </div>
 
-		<div class="form-container sign-in-container">
-			
-			
-			<form (ngSubmit)="login()" ngNativeValidate>
-				<h1>Sign In</h1>
-				<!-- <div class="social-container">
-					<a href="#" class="social"><i class="fa fa-facebook"></i></a>
-					<a href="#" class="social"><i class="fa fa-google"></i></a>
-					<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
-				</div>
-				<span>or use your account</span> -->
-				<input type="email" name="email" [(ngModel)]="email" placeholder="Email" required>
-				<input type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
-				<a href="#">Forgot Your Password</a>
-				
-				<button [disabled]="!email && !password">Sign In</button>
-				<div class="to-mobile">
-					<p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
-					<a class="ghost text-pink" (click)="signUp()">Sign Up</a>
-				</div>
-			</form>
-		</div>
+    <div class="form-container sign-in-container">
+      <form (ngSubmit)="login()" ngNativeValidate>
+        <h1>Entrar</h1>
+        <input
+          class="focus:border-pink"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          class="focus:border-pink"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Password"
+          required
+        />
+        <a href="#">Esqueceu sua senha?</a>
 
-		<div class="overlay-container">
-			<div class="overlay">
-				<div class="overlay-panel overlay-left">
-					<h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal info</p>
-					<button class="ghost text-pink" (click)="signIn()">Sign In</button>
-				</div>
-				<div class="overlay-panel overlay-right">
-					<h1>Hello, Friend!</h1>
-					<p>Enter your details and start journey with us</p>
-					<button class="ghost text-pink" (click)="signUp()">Sign Up</button>
-				</div>
-			</div>
-		</div>
-	</div>
+        <button [disabled]="!email && !password">Entrar</button>
+        <div class="to-mobile">
+          <p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
+          <a class="ghost text-pink" (click)="signUp()">Cadastrar</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Bem-vindo de volta!</h1>
+          <p>
+            Acesse já sua conta para verificar as atualizações, verificar dados
+            e sempre poder ajudar o próximo ^-^.
+          </p>
+          <button class="ghost text-pink" (click)="signIn()">Entrar</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Olá, Amigo!</h1>
+          <p>Entre com seus dados para criar sua conta.</p>
+          <button class="ghost text-pink" (click)="signUp()">Cadastrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

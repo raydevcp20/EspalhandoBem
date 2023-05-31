@@ -7,7 +7,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { TimelineComponent } from './timeline/timeline.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
-
+ 
 const routes: Routes = [
   {path: '', redirectTo: 'timeline', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},

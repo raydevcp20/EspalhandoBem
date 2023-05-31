@@ -79,12 +79,18 @@ form {
 }
 
 input[type="text"], input[type="number"],input[type="tel"], input[type="email"], input[type="password"] {
-	background-color: #eee;
-	border: none;
+	border: 1px solid var(--teal);
 	padding: 3px 11px;
 	margin: 8px 0 0;
 	width: 100%;
 	outline: none;
+	transition: 0.3s;
+}
+
+.disabled{
+	background-color: #ededed;;
+    cursor: no-drop;
+    pointer-events: none;
 }
 
 .container {
@@ -96,7 +102,7 @@ input[type="text"], input[type="number"],input[type="tel"], input[type="email"],
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 530px;
 }
 
 .form-container {
