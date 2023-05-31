@@ -1,6 +1,6 @@
 const { throws } = require('assert');
 const { validationResult } = require('express-validator');
-const md5 = require('md5');
+// const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 
 const userDAO = require('../DAO/user-DAO');
@@ -73,19 +73,8 @@ exports.createUser = async (req, res, next) => {
 
   if (!errors.isEmpty()) return;
 
-//   const name = req.body.name;
-//   const email = req.body.email;
-//   const password = req.body.password;
-
   try {
-
-    // const userDetails = {
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    // };
-    console.log(req.body)
-    req.body.password = md5(req.body.password);
+    // req.body.password = md5(req.body.password);
     const result = await user.createUser(req.body);
     console.log(result)
     
@@ -108,7 +97,6 @@ exports.login = async (req, res, next) => {
 
   try {
     const userLogged = await user.login(email);
-    console.log(userLogged[0]);
     if (userLogged[0].length === 0) {
       const error = new Error('A user with this email could not be found.');
       error.statusCode = 401;
@@ -122,7 +110,7 @@ exports.login = async (req, res, next) => {
     }
     
     const storedUser = userLogged[0][0];
-    let hashpassword = md5(password);
+    let hashpassword = password;
 
     const isEqual = hashpassword == storedUser.password;
     

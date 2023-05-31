@@ -8,7 +8,7 @@ const user = new userDAO();
 
 const auth = require('../middleware/auth');
 
-const authController = require('../controllers/auth');
+const authController = require('../controllers/user');
 const categoryController = require('../controllers/category');
 
 router.post(

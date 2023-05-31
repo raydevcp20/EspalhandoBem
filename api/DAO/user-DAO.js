@@ -3,12 +3,6 @@ const db = require('../util/database');
 
 module.exports = class userDAO {
     constructor(){
-        // this._connection = mysql.createConnection({
-        //           host: 'localhost',
-        //           user: 'root',
-        //           database: 'espalhandobem',
-        //           password: ''
-        // });
     }
 
     list(){
@@ -57,11 +51,10 @@ module.exports = class userDAO {
         let url = "";
         let existUser = [];
         try {
-            console.log(user)
             if(user.typeNID == "cnpj"){
                 existUser = await this.listbyCNPJ(user.cnpj);
                 if(existUser[0].length === 0){
-                    url = `INSERT INTO users (name, type_NID, email, password, id_category, cep, street, city, state, cnpj, telephone) 
+                    url = `INSERT INTO users (name, type_NID, email, password, id_category, cep, street, city, state, cnpj, phone) 
                     values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', ${user.idCategory}, '${user.cep}', 
                     '${user.street}',  '${user.city}', '${user.state}', '${user.cnpj}', '${user.telephone}' )`;
                 }else {
@@ -69,9 +62,8 @@ module.exports = class userDAO {
                 }
             }else if(user.typeNID == "cpf"){
                 existUser = await this.listbyCPF(user.cpf);
-                console.log(existUser[0])
                 if(existUser[0].length === 0){
-                    url = `INSERT INTO users (name, type_NID, email, password, cpf, telephone) 
+                    url = `INSERT INTO users (name, type_NID, email, password, cpf, phone) 
                             values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.cpf}', '${user.telephone}' )`;
                 }else {
                     return "Error: usuario já existente"
@@ -79,7 +71,7 @@ module.exports = class userDAO {
             }
             return db.execute(url);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 

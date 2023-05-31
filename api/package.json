@@ -10,14 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-validator": "^6.13.0",
-    "jsonwebtoken": "^8.5.1",
-    "md5": "^2.3.0",
-    "mysql2": "^2.3.3-rc.0",
-    "sequelize": "^6.9.0",
-    "uuid": "^8.3.2"
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.3.3",
+    "nodemon": "^2.0.22",
+    "bcrypt": "^5.0.1"
   }
 }
