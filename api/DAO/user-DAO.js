@@ -1,8 +1,13 @@
 // const mysql = require('mysql2'); 
+const { url } = require('inspector');
 const db = require('../util/database');
 
 module.exports = class userDAO {
     constructor(){
+    }
+
+    getByUserId(userId){
+        return db.execute(`SELECT * FROM users WHERE cnpj = ${userId} or cpf = ${userId}`);
     }
 
     list(){
@@ -31,8 +36,13 @@ module.exports = class userDAO {
         return db.execute( `SELECT * FROM users WHERE cnpj = '${cnpj}'`);
     }
 
-    login(email){
-        return db.execute(`SELECT * from users WHERE email = '${email}'`);
+    login(email, password){
+        let url = `SELECT * from users WHERE email = '${email} and password = '${password}'`;
+        try {
+            return { status: "SUCCESS",  result: db.execute(url)};
+        } catch (error) {
+            return { status: "ERROR",  result: error };
+        }
     }
 
     setFavorite(user){
@@ -58,7 +68,7 @@ module.exports = class userDAO {
                     values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', ${user.idCategory}, '${user.cep}', 
                     '${user.street}',  '${user.city}', '${user.state}', '${user.cnpj}', '${user.telephone}' )`;
                 }else {
-                    return "Error: usuario já existente"
+                    return { status: "ERROR",  result: "Não é permitido criar o usuário. CNPJ já cadastrado." }
                 }
             }else if(user.typeNID == "cpf"){
                 existUser = await this.listbyCPF(user.cpf);
@@ -66,12 +76,13 @@ module.exports = class userDAO {
                     url = `INSERT INTO users (name, type_NID, email, password, cpf, phone) 
                             values ( '${user.name}', '${user.typeNID}', '${user.email}', '${user.password}', '${user.cpf}', '${user.telephone}' )`;
                 }else {
-                    return "Error: usuario já existente"
+                    return { status: "ERROR",  result: "Não é permitido criar o usuário. CPF já cadastrado." }
                 }
             }
-            return db.execute(url);
+
+            return { status: "SUCCESS",  result: db.execute(url) };
         } catch (error) {
-            console.log(error);
+            return { status: "ERROR",  result: error };
         }
     }
 

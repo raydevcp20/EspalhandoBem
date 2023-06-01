@@ -39,24 +39,23 @@ export class UserService {
       );
   }
 
-  login(email: string, password: string) {
-    
+  login(userID: string, password: string) {
     return this.http
-      .post(`${this.url}/login`, { email, password }, this.httpOptions)
+      .post(`${this.url}/login`, { userID: userID, password: password }, this.httpOptions)
       .pipe(
-        first(),
-        tap((tokenObject: any) => {
-          this.userId = tokenObject.user.id;
-          localStorage.setItem("token", tokenObject.token);
-          localStorage.setItem("user", JSON.stringify(tokenObject.user));
+        // first(),
+        // tap((tokenObject: any) => {
+        //   this.userId = tokenObject.user.id;
+        //   localStorage.setItem("token", tokenObject.token);
+        //   localStorage.setItem("user", JSON.stringify(tokenObject.user));
           
-          // this.cookieService.set('logged', 'true');
-          this.isUserLoggedIn = true;
-          this.router.navigate(["timeline"]);
-        }),
-        catchError(
-          this.errorHandlerService.handleError<{ token: string; userId: number}>("login")
-        )
+        //   // this.cookieService.set('logged', 'true');
+        //   this.isUserLoggedIn = true;
+        //   this.router.navigate(["timeline"]);
+        // }),
+        // catchError(
+        //   this.errorHandlerService.handleError<{ token: string; userId: number}>("login")
+        // )
       );
   }
 

@@ -1,6 +1,6 @@
-const { throws } = require('assert');
-const { validationResult } = require('express-validator');
-// const md5 = require('md5');
+const { validationResult, Result } = require('express-validator');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 
 const userDAO = require('../DAO/user-DAO');
@@ -68,73 +68,65 @@ exports.setFavorite = async (req, res, next) => {
   }
 }
 
-exports.createUser = async (req, res, next) => {
+exports.createUser = (req, res, next) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) return;
 
   try {
-    // req.body.password = md5(req.body.password);
-    const result = await user.createUser(req.body);
-    console.log(result)
+    bcrypt.hash(req.body.password, saltRounds)
+    .then(async (hash) => {
+      req.body.password = hash;
+      const result = await user.createUser(req.body);
+
+      if(result.status != "ERROR"){
+          res.status(201).json(result);
+      }else{
+          res.status(400).json(result);
+      }
+    });
     
-    if(result != "Error: usuario já existente"){
-        res.status(201).json({ message: 'User registered!' });
-    }else{
-        res.status(400).json({ message: 'Usuario já registrado' });
-    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    next(err);
+    return res.status(500);
   }
 };
 
 exports.login = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
+  let userID = req.body.userID;
+  let password = req.body.password;
   try {
-    const userLogged = await user.login(email);
-    if (userLogged[0].length === 0) {
-      const error = new Error('A user with this email could not be found.');
-      error.statusCode = 401;
-      res.status(error.statusCode).json({ message: 'A user with this email could not be found.' });
-      throw error;
+    let [userById] = await user.getByUserId(userID);
+    
+    if(userById[0].length === 0){
+      res.status(404).json({ status: "ERROR",  result: 'CPF ou CNPJ não encontrado. Verifique se digitou corretamente.' });
+    }else{  
+      bcrypt.hash(password, saltRounds)
+      .then((hash) => {
+        bcrypt.compare(userById[0].password, hash)
+        .then((result) => {
+          if(result){
+            const token = jwt.sign(
+              {
+                userId: userById[0].id,
+                email: userById[0].email,
+              },
+              'secretfortoken',
+              { expiresIn: '2h' }
+            );
+            res.status(200).json({ status: "SUCCESS",  result: { token: token, user: userById[0] }});
+          }else{
+            res.status(404).json({ status: "ERROR",  result: 'Senha incorreta. Verifique se digitou corretamente.' });
+          }
+        });
+      });
     }
 
-    if(userLogged[0][0].type_NID == 'cnpj'){
-      let objFormated = await user.getById(userLogged[0][0]);
-      userLogged[0][0] = objFormated[0][0];
-    }
-    
-    const storedUser = userLogged[0][0];
-    let hashpassword = password;
-
-    const isEqual = hashpassword == storedUser.password;
-    
-    if (!isEqual) {
-      const error = new Error('Wrong password!');
-      error.statusCode = 401;
-      res.status(error.statusCode).json({ message: 'Wrong password!' });
-      throw error;
-    }
-
-    const token = jwt.sign(
-      {
-        userId: storedUser.id,
-        email: storedUser.email,
-      },
-      'secretfortoken',
-      { expiresIn: '2h' }
-    );
-    
-    res.status(200).json({ token: token, user: storedUser });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    next(err);
+    return res.status(500);
   }
 };

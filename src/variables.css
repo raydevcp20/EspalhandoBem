@@ -7,6 +7,8 @@
     --white:  #fff;
     --black:  #242424;
     --grey:   #f3f3f4;
-    --red: #e70114;
+    --red: #f20014;
     --green: #008a44;
+    --background-disabled: #bab7b7;
+    --color-disabled: #5d5d5d;
 }

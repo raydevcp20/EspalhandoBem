@@ -16,41 +16,31 @@ export class LoginComponent implements OnInit {
   container: any = '';
 
   userForm = new FormGroup({
-    typeNID: new FormControl(''),
+    typeNID: new FormControl('cpf', Validators.required),
     name: new FormControl('', Validators.required),
-    email: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
     cpf: new FormControl(''),
     cnpj: new FormControl(''),
     phone: new FormControl(''),
     cep: new FormControl(''),
-    city: new FormControl({value: '', disabled: true}),
-    street: new FormControl({value: '', disabled: true}),
-    state: new FormControl({value: '', disabled: true}),
+    city: new FormControl({ value: '', disabled: true }),
+    street: new FormControl({ value: '', disabled: true }),
+    state: new FormControl({ value: '', disabled: true }),
     idCategory: new FormControl(''),
-    password: new FormControl(''),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(7),
+    ]),
   });
 
-  passwordEquals: boolean = true;
+  passwordEquals: boolean = false;
 
-  newUser: any = {
-    typeNID: '',
-    name: '',
-    email: '',
-    cpf: '',
-    cnpj: '',
-    phone: '',
-    street: '',
-    cep: '',
-    city: '',
-    state: '',
-    idCategory: 0,
-    password: '',
-  };
-
+  newUser: any = {};
+  password: string = '';
   categoriesList: any = [];
 
-  email: string = '';
-  password: string = '';
+  userID: string = '';
+  loginPassword: string = '';
 
   constructor(
     private userService: UserService,
@@ -60,18 +50,14 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.cookieService.set('logged', 'false');
-    this.container = document.getElementById('container');
-
-    this.categoryService.listAllCategories().subscribe((data) => {
-      this.categoriesList = data;
+    this.categoryService.listAllCategories()
+    .subscribe((categories) => {
+      this.categoriesList = categories;
     });
-
-    this.newUser.typeNID = 'cpf';
   }
-
-  choiceOn(typeID: string) {
-    this.newUser.typeNID = typeID;
+  
+  ngAfterViewInit(): void {
+    this.container = document.getElementById('container');
   }
 
   choiceCategory(idCategory: string) {
@@ -79,45 +65,58 @@ export class LoginComponent implements OnInit {
   }
 
   createUser(): void {
-    console.log(this.userForm.value);
-    // if(this.newUser.typeNID == 'cpf'){
-    //   let result = this.validateCPF(this.newUser.cpf);
-    //   if(!result){
-    //     debugger;
-    //     this.toastr.error('Error: ', 'CPF não validado');
-    //     return;
-    //   }
-    // }else{
-    //   let result = this.validarCNPJ(this.newUser.cnpj);
-    //   if(!result){
-    //     this.toastr.error('Error: ', 'CNPJ não validado');
-    //     return;
-    //   }
-    // }
+    this.newUser = this.userForm.value;
 
-    // this.userService.createUser(this.newUser).subscribe((msg: any) => {
-    //   console.log(msg);
-    //   this.toastr.success('Criação de usuário bem sucedida ', msg.message);
-    //   // this.router.navigate(["login"]);
-    //   window.location.reload();
-    // });
-  }
-
-  checkPassword($event: any): void {
-    let password = $event.target.value;
-
-    if (password == this.newUser.password) {
-      this.passwordEquals = true;
-    } else {
-      this.passwordEquals = false;
+    if(this.newUser.typeNID == 'cpf'){
+      if(!this.validateCPF()){
+        this.toastr.error('Error: ', 'CPF não validado');
+        return;
+      }
+    }else{
+      if(!this.validateCNPJ()){
+        this.toastr.error('Error: ', 'CNPJ não validado');
+        return;
+      }
     }
+
+    this.userService.createUser(this.newUser)
+    .subscribe((msg: any) => {
+      console.log(msg);
+      debugger;
+      this.toastr.success(msg.message, 'Criação de usuário bem sucedida ', {
+        timeOut: 5000,
+      });
+      // this.router.navigate(["login"]);
+      // window.location.reload();
+    },
+    (err: any) => {
+      console.error(err);
+      this.toastr.error(err.error.result, 'Erro: ', {
+        timeOut: 5000,
+      });
+    });
   }
 
-  login(): void {
-    this.userService.login(this.email, this.password).subscribe();
+  login(){
+    this.userService.login(this.userID, this.loginPassword)
+    .subscribe((msg: any) => {
+      console.log(msg);
+      debugger;
+      this.toastr.success(msg.message, 'Login efetuado com sucesso', {
+        timeOut: 5000,
+      });
+      // this.router.navigate(["login"]);
+      // window.location.reload();
+    },
+    (err: any) => {
+      console.error(err);
+      this.toastr.error(err.error.result, 'Erro: ', {
+        timeOut: 5000,
+      });
+    });
   }
 
-  logout(): void {
+  logout(){
     localStorage.removeItem('token');
     this.userService.isUserLoggedIn = false;
     // this.router.navigate(["login"]);
@@ -129,6 +128,18 @@ export class LoginComponent implements OnInit {
 
   signUp() {
     this.container.classList.add('right-panel-active');
+  }
+
+  checkPassword($event: any){
+    let password = $event.target.value;
+
+    if (password == this.userForm.value.password) {
+      this.userForm.controls['password'].setErrors(null);
+      this.passwordEquals = true;
+    } else {
+      this.userForm.controls['password'].setErrors({ incorrect: true });
+      this.passwordEquals = false;
+    }
   }
 
   validateCPF() {
@@ -209,7 +220,7 @@ export class LoginComponent implements OnInit {
   validateCEP() {
     let cep = this.userForm.value.cep || '';
     cep = cep.replace(/\D/g, '');
-    if(cep.length > 7){
+    if (cep.length > 7) {
       return true;
     }
 
@@ -218,15 +229,25 @@ export class LoginComponent implements OnInit {
 
   getAddressByViaCep() {
     if (this.validateCEP()) {
-      this.userService.getAddressByViaCep(this.userForm.value.cep || '')
-      .subscribe((address: any) => {
-        console.log(address)
-        this.userForm.value.city = address.localidade;
-        this.userForm.value.street = address.logradouro;
-        this.userForm.value.state = address.uf;
-        this.userForm.setValue(this.userForm.value as any);
-        // console.log(this.userForm.setValue(this.userForm.value)
-      });
+      this.userService
+        .getAddressByViaCep(this.userForm.value.cep || '')
+        .subscribe((address: any) => {
+          console.log(address);
+          this.userForm.value.city = address.localidade;
+          this.userForm.value.street = address.logradouro;
+          this.userForm.value.state = address.uf;
+          this.userForm.setValue(this.userForm.value as any);
+          // console.log(this.userForm.setValue(this.userForm.value)
+        });
     }
+  }
+
+  validatePassword() {
+    let password = this.userForm.value.password || '';
+    if (password.length >= 7) {
+      return true;
+    }
+
+    return false;
   }
 }

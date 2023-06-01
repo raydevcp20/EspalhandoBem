@@ -9,7 +9,18 @@
 main{
     background-color: var(--grey);
 }
-
+select{
+  outline: none;
+}
+button{
+  cursor: pointer;
+  transition: .5s;
+}
+button:disabled{
+  background-color: var(--background-disabled) !important;
+  color: var(--color-disabled) !important;
+  border: 0px !important;
+}
 .text-pink{
     color: var(--pink) !important;
 }
@@ -80,7 +91,7 @@ main{
 }
 
 .border-error{
-    border: 2px solid var(--red) !important;
+    border: 1px solid var(--red) !important;
 }
 .border-success{
     border: 1px solid var(--green) !important;

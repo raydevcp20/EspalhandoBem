@@ -13,27 +13,24 @@
         <p class="mb-0">Você é uma pessoa física ou jurídica?</p>
         <div class="input-radio">
           <div>
+            <!-- (click)="choiceOn('cpf')" -->
             <input
               class="mr-2"
               type="radio"
-              (click)="choiceOn('cpf')"
+              formControlName="typeNID"
               id="cpf"
-              name="typeID"
-              value="CPF"
-              required
-              checked
+              value="cpf"
             />
             <label for="cpf">CPF</label>
           </div>
           <div>
+            <!-- (click)="choiceOn('cnpj')" -->
             <input
               class="mr-2"
               type="radio"
-              (click)="choiceOn('cnpj')"
+              formControlName="typeNID"
               id="cnpj"
-              name="typeID"
-              value="CNPJ"
-              required
+              value="cnpj"
             />
             <label for="cnpj">CNPJ</label>
           </div>
@@ -143,7 +140,7 @@
             placeholder="Estado"
           />
           <div class="border-pink mt-2 rounded">
-            <select name="categoria" id="categoria" class="w-full mt-px">
+            <select formControlName="idCategory" class="w-full mt-px">
               <option value="" selected>Categoria</option>
               <option
                 *ngFor="let category of categoriesList"
@@ -159,26 +156,36 @@
             <input
               class="focus:border-pink"
               type="password"
-              name="senha"
               placeholder="Senha"
+              formControlName="password"
             />
           </div>
           <div>
             <input
               class="focus:border-pink"
-              [ngClass]="{ 'border-error': !passwordEquals }"
+              [ngClass]="{
+                'border-error':
+                  userForm.controls.password.touched && !passwordEquals
+              }"
               type="password"
-              name="senha"
               (keyup)="checkPassword($event)"
               placeholder="Repita a senha"
             />
           </div>
         </div>
-        <span *ngIf="!passwordEquals">*Senhas diferentes</span>
+        <span
+          class="alert-component"
+          *ngIf="userForm.controls.password.touched && !passwordEquals"
+          >*Senhas diferentes</span
+        >
+        <span
+          class="alert-component"
+          *ngIf="userForm.controls.password.touched && !validatePassword()"
+          >*Sua senha deve conter mais que 7 caracteres.</span
+        >
         <button
           class="mt-8"
-          (click)="createUser()"
-          [disabled]="userForm.invalid"
+          [disabled]="!passwordEquals || userForm.invalid"
         >
           Cadastrar
         </button>
@@ -194,23 +201,25 @@
         <h1>Entrar</h1>
         <input
           class="focus:border-pink"
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Email"
+          type="text"
+          name="userId"
+          [(ngModel)]="userID"
+          placeholder="Digite seu CNPJ ou CPF"
           required
         />
         <input
           class="focus:border-pink"
           type="password"
           name="password"
-          [(ngModel)]="password"
-          placeholder="Password"
+          [(ngModel)]="loginPassword"
+          placeholder="Senha"
           required
         />
-        <a href="#">Esqueceu sua senha?</a>
+        <!-- <a href="#">Esqueceu sua senha?</a> -->
 
-        <button [disabled]="!email && !password">Entrar</button>
+        <button class="mt-4" [disabled]="!userID && !loginPassword">
+          Entrar
+        </button>
         <div class="to-mobile">
           <p class="mb-0">Não possui uma conta? Crie uma aqui!</p>
           <a class="ghost text-pink" (click)="signUp()">Cadastrar</a>
