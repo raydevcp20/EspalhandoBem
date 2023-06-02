@@ -50,73 +50,83 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoryService.listAllCategories()
-    .subscribe((categories) => {
+    this.newUser.typeNID = 'cpf';
+    this.categoryService.listAllCategories().subscribe((categories) => {
       this.categoriesList = categories;
     });
   }
-  
+
+  choiceOn(choice: string) {
+    if (choice == 'cpf') {
+      this.newUser.typeNID = 'cpf';
+    } else {
+      this.newUser.typeNID = 'cnpj';
+    }
+  }
+
   ngAfterViewInit(): void {
     this.container = document.getElementById('container');
   }
 
   choiceCategory(idCategory: string) {
-    this.newUser.idCategory = idCategory;
+    this.userForm.value.idCategory = idCategory;
   }
 
   createUser(): void {
     this.newUser = this.userForm.value;
 
-    if(this.newUser.typeNID == 'cpf'){
-      if(!this.validateCPF()){
+    if (this.newUser.typeNID == 'cpf') {
+      if (!this.validateCPF()) {
         this.toastr.error('Error: ', 'CPF não validado');
         return;
       }
-    }else{
-      if(!this.validateCNPJ()){
+    } else {
+      if (!this.validateCNPJ()) {
         this.toastr.error('Error: ', 'CNPJ não validado');
         return;
       }
     }
 
-    this.userService.createUser(this.newUser)
-    .subscribe((msg: any) => {
-      console.log(msg);
-      debugger;
-      this.toastr.success(msg.message, 'Criação de usuário bem sucedida ', {
-        timeOut: 5000,
-      });
-      // this.router.navigate(["login"]);
-      // window.location.reload();
-    },
-    (err: any) => {
-      console.error(err);
-      this.toastr.error(err.error.result, 'Erro: ', {
-        timeOut: 5000,
-      });
-    });
+    this.userService.createUser(this.newUser).subscribe(
+      (msg: any) => {
+        console.log(msg);
+        debugger;
+        this.toastr.success(msg.message, 'Criação de usuário bem sucedida ', {
+          timeOut: 5000,
+        });
+        // this.router.navigate(["login"]);
+        // window.location.reload();
+      },
+      (err: any) => {
+        console.error(err);
+        this.toastr.error(err.error.result, 'Erro: ', {
+          timeOut: 5000,
+        });
+      }
+    );
   }
 
-  login(){
-    this.userService.login(this.userID, this.loginPassword)
-    .subscribe((msg: any) => {
-      console.log(msg);
-      debugger;
-      this.toastr.success(msg.message, 'Login efetuado com sucesso', {
-        timeOut: 5000,
-      });
-      // this.router.navigate(["login"]);
-      // window.location.reload();
-    },
-    (err: any) => {
-      console.error(err);
-      this.toastr.error(err.error.result, 'Erro: ', {
-        timeOut: 5000,
-      });
-    });
+  login() {
+    this.userService.login(this.userID, this.loginPassword).subscribe(
+      (msg: any) => {
+        console.log(msg);
+        debugger;
+        this.toastr.success(msg.message, 'Login efetuado com sucesso', {
+          timeOut: 5000,
+        });
+        // this.router.navigate(["login"]);
+        // window.location.reload();
+      },
+      (err: any) => {
+        console.error(err);
+        this.toastr.error(err.error.result, 'Erro: ', {
+          timeOut: 5000,
+        });
+      }
+    );
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('token');
     this.userService.isUserLoggedIn = false;
     // this.router.navigate(["login"]);
@@ -130,7 +140,7 @@ export class LoginComponent implements OnInit {
     this.container.classList.add('right-panel-active');
   }
 
-  checkPassword($event: any){
+  checkPassword($event: any) {
     let password = $event.target.value;
 
     if (password == this.userForm.value.password) {

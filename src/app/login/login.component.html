@@ -1,10 +1,5 @@
 <div class="bg-teal w-full text-center h-screen">
-  <img
-    width="300"
-    class="inline mb-8"
-    src="../../assets/img/logo-branca.png"
-    alt="logo"
-  />
+  <img width="300" class="inline mb-8" src="../../assets/img/logo-branca.png" alt="logo" />
 
   <div class="container" id="container">
     <div class="form-container sign-up-container">
@@ -13,139 +8,66 @@
         <p class="mb-0">Você é uma pessoa física ou jurídica?</p>
         <div class="input-radio">
           <div>
-            <!-- (click)="choiceOn('cpf')" -->
-            <input
-              class="mr-2"
-              type="radio"
-              formControlName="typeNID"
-              id="cpf"
-              value="cpf"
-            />
+            <input class="mr-2" (click)="choiceOn('cpf')" type="radio" formControlName="typeNID" id="cpf" value="cpf" />
             <label for="cpf">CPF</label>
           </div>
           <div>
-            <!-- (click)="choiceOn('cnpj')" -->
-            <input
-              class="mr-2"
-              type="radio"
-              formControlName="typeNID"
-              id="cnpj"
-              value="cnpj"
-            />
+            <input class="mr-2" type="radio" (click)="choiceOn('cnpj')" formControlName="typeNID" id="cnpj"
+              value="cnpj" />
             <label for="cnpj">CNPJ</label>
           </div>
         </div>
 
-        <input
-          class="focus:border-pink"
-          type="text"
-          formControlName="name"
-          placeholder="Nome"
-        />
-        <input
-          class="focus:border-pink"
-          type="email"
-          formControlName="email"
-          placeholder="Email"
-        />
-        <div
-          class="alert-component"
-          *ngIf="userForm.controls.email.touched && !validateEmail()"
-        >
+        <input class="focus:border-pink" type="text" formControlName="name" placeholder="Nome" />
+        <input class="focus:border-pink" type="email" formControlName="email" placeholder="Email" />
+        <div class="alert-component" *ngIf="userForm.controls.email.touched && !validateEmail()">
           Digite um formato de email válido.
         </div>
         <div class="grid grid-cols-2 gap-2">
-          <input
-            class="focus:border-pink"
-            type="text"
-            formControlName="cpf"
-            *ngIf="newUser.typeNID == 'cpf'"
-            placeholder="CPF"
-          />
-          <input
-            class="focus:border-pink"
-            type="text"
-            formControlName="cnpj"
-            *ngIf="newUser.typeNID == 'cnpj'"
-            placeholder="CNPJ"
-          />
-          <input
-            class="focus:border-pink"
-            type="tel"
-            formControlName="phone"
-            placeholder="Telefone"
-          />
+          <input class="focus:border-pink" type="text" formControlName="cpf" *ngIf="newUser.typeNID == 'cpf'"
+            placeholder="CPF" />
+          <input class="focus:border-pink" type="text" formControlName="cnpj" *ngIf="newUser.typeNID == 'cnpj'"
+            placeholder="CNPJ" />
+          <input class="focus:border-pink" type="tel" formControlName="phone" placeholder="Telefone" />
         </div>
-        <div
-          class="alert-component"
-          *ngIf="
+        <div class="alert-component" *ngIf="
             newUser.typeNID == 'cpf' &&
             userForm.controls.cpf.touched &&
             !validateCPF()
-          "
-        >
+          ">
           Digite um formato de CPF válido.
         </div>
-        <div
-          class="alert-component"
-          *ngIf="
+        <div class="alert-component" *ngIf="
             newUser.typeNID == 'cnpj' &&
             userForm.controls.cnpj.touched &&
             !validateCNPJ()
-          "
-        >
+          ">
           Digite um formato de CNPJ válido.
         </div>
         <div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
           <div>
-            <input
-              class="focus:border-pink"
-              type="text"
-              formControlName="cep"
-              placeholder="CEP"
-              (blur)="getAddressByViaCep()"
-            />
+            <input class="focus:border-pink" type="text" formControlName="cep" placeholder="CEP"
+              (blur)="getAddressByViaCep()" />
           </div>
           <div>
-            <input
-              class="disabled focus:border-pink"
-              type="text"
-              formControlName="city"
-              placeholder="Cidade"
-            />
+            <input class="disabled focus:border-pink" type="text" formControlName="city" placeholder="Cidade" />
           </div>
         </div>
-        <div
-          class="alert-component"
-          *ngIf="
+        <div class="alert-component" *ngIf="
             newUser.typeNID == 'cnpj' &&
             userForm.controls.cep.touched &&
             !validateCEP()
-          "
-        >
+          ">
           Digite um formato de CEP válido.
         </div>
-        <input
-          class="disabled focus:border-pink"
-          type="text"
-          formControlName="street"
-          *ngIf="newUser.typeNID == 'cnpj'"
-          placeholder="Endereço"
-        />
+        <input class="disabled focus:border-pink" type="text" formControlName="street" *ngIf="newUser.typeNID == 'cnpj'"
+          placeholder="Endereço" />
         <div class="grid grid-cols-2 gap-2" *ngIf="newUser.typeNID == 'cnpj'">
-          <input
-            class="disabled focus:border-pink"
-            type="text"
-            formControlName="state"
-            placeholder="Estado"
-          />
+          <input class="disabled focus:border-pink" type="text" formControlName="state" placeholder="Estado" />
           <div class="border-pink mt-2 rounded">
             <select formControlName="idCategory" class="w-full mt-px">
               <option value="" selected>Categoria</option>
-              <option
-                *ngFor="let category of categoriesList"
-                value="{{ category.id }}"
-              >
+              <option *ngFor="let category of categoriesList" value="{{ category.id }}">
                 {{ category.name }}
               </option>
             </select>
@@ -153,40 +75,20 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <input
-              class="focus:border-pink"
-              type="password"
-              placeholder="Senha"
-              formControlName="password"
-            />
+            <input class="focus:border-pink" type="password" placeholder="Senha" formControlName="password" />
           </div>
           <div>
-            <input
-              class="focus:border-pink"
-              [ngClass]="{
+            <input class="focus:border-pink" [ngClass]="{
                 'border-error':
                   userForm.controls.password.touched && !passwordEquals
-              }"
-              type="password"
-              (keyup)="checkPassword($event)"
-              placeholder="Repita a senha"
-            />
+              }" type="password" (keyup)="checkPassword($event)" placeholder="Repita a senha" />
           </div>
         </div>
-        <span
-          class="alert-component"
-          *ngIf="userForm.controls.password.touched && !passwordEquals"
-          >*Senhas diferentes</span
-        >
-        <span
-          class="alert-component"
-          *ngIf="userForm.controls.password.touched && !validatePassword()"
-          >*Sua senha deve conter mais que 7 caracteres.</span
-        >
-        <button
-          class="mt-8"
-          [disabled]="!passwordEquals || userForm.invalid"
-        >
+        <span class="alert-component" *ngIf="userForm.controls.password.touched && !passwordEquals">*Senhas
+          diferentes</span>
+        <span class="alert-component" *ngIf="userForm.controls.password.touched && !validatePassword()">*Sua senha deve
+          conter mais que 7 caracteres.</span>
+        <button class="mt-8" [disabled]="!passwordEquals || userForm.invalid">
           Cadastrar
         </button>
         <div class="to-mobile">
@@ -199,22 +101,10 @@
     <div class="form-container sign-in-container">
       <form (ngSubmit)="login()" ngNativeValidate>
         <h1>Entrar</h1>
-        <input
-          class="focus:border-pink"
-          type="text"
-          name="userId"
-          [(ngModel)]="userID"
-          placeholder="Digite seu CNPJ ou CPF"
-          required
-        />
-        <input
-          class="focus:border-pink"
-          type="password"
-          name="password"
-          [(ngModel)]="loginPassword"
-          placeholder="Senha"
-          required
-        />
+        <input class="focus:border-pink" type="text" name="userId" [(ngModel)]="userID"
+          placeholder="Digite seu CNPJ ou CPF" required />
+        <input class="focus:border-pink" type="password" name="password" [(ngModel)]="loginPassword" placeholder="Senha"
+          required />
         <!-- <a href="#">Esqueceu sua senha?</a> -->
 
         <button class="mt-4" [disabled]="!userID && !loginPassword">

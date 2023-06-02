@@ -1,4 +1,4 @@
-const { validationResult, Result } = require('express-validator');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
@@ -108,10 +108,7 @@ exports.login = async (req, res, next) => {
         .then((result) => {
           if(result){
             const token = jwt.sign(
-              {
-                userId: userById[0].id,
-                email: userById[0].email,
-              },
+              { user: JSON.stringify(userById[0]) },
               'secretfortoken',
               { expiresIn: '2h' }
             );
